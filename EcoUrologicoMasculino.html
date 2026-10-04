@@ -20,9 +20,38 @@
       margin: 0;
       padding: 20px 0;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       font-size: 10pt;
       line-height: 1.35;
+    }
+
+    /* BOTÓN DE IMPRESIÓN / DESCARGA PDF */
+    .no-print-container {
+      width: 215.9mm;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+    }
+
+    .btn-print {
+      background-color: #1a365d;
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      font-size: 9.5pt;
+      font-weight: 700;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-print:hover {
+      background-color: #2b6cb0;
     }
 
     /* CONTENEDOR TAMAÑO CARTA FIJO */
@@ -42,7 +71,7 @@
     .header-container {
       border-bottom: 2pt solid #1a365d;
       padding-bottom: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     .clinic-title {
@@ -66,14 +95,14 @@
       background-color: #f7fafc;
       border: 1px solid #e2e8f0;
       border-radius: 5px;
-      padding: 8px 12px;
-      margin-bottom: 12px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
     }
 
     .patient-grid {
       display: grid;
       grid-template-columns: 2fr 1.2fr 1fr;
-      gap: 6px 12px;
+      gap: 8px 14px;
     }
 
     .data-item {
@@ -98,7 +127,7 @@
     /* TÍTULO DEL INFORME DEBAJO DE PACIENTE */
     .doc-title-container {
       text-align: center;
-      margin: 8px 0 14px 0;
+      margin: 10px 0 16px 0;
     }
 
     .doc-title {
@@ -115,16 +144,16 @@
     /* EQUIPO UTILIZADO */
     .equipment-box {
       font-size: 9pt;
-      margin-bottom: 12px;
-      padding: 6px 10px;
+      margin-bottom: 18px;
+      padding: 8px 12px;
       background-color: #edf2f7;
       border-left: 3px solid #3182ce;
       color: #2d3748;
     }
 
-    /* BLOQUES DE ÓRGANOS */
+    /* BLOQUES DE ÓRGANOS CON ESPACIAMENTO MEJORADO */
     .organ-block {
-      margin-bottom: 10px;
+      margin-bottom: 16px;
       text-align: justify;
       font-size: 9.5pt;
     }
@@ -149,8 +178,8 @@
     }
 
     .desc-box {
-      margin-top: 4px;
-      padding-left: 8px;
+      margin-top: 6px;
+      padding-left: 10px;
       border-left: 2px solid #cbd5e0;
       font-style: italic;
       color: #4a5568;
@@ -158,7 +187,7 @@
 
     /* IMPRESIÓN DIAGNÓSTICA */
     .diagnostic-container {
-      margin-top: 10px;
+      margin-top: 14px;
       background-color: #f7fafc;
       border: 1px solid #cbd5e0;
       border-radius: 5px;
@@ -171,7 +200,7 @@
       font-weight: 700;
       color: #1a365d;
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .diagnostic-content {
@@ -182,7 +211,7 @@
 
     /* FIRMA Y PIE DE PÁGINA */
     .footer-container {
-      margin-top: 15px;
+      margin-top: 20px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -210,6 +239,9 @@
     }
 
     @media print {
+      .no-print-container {
+        display: none !important;
+      }
       body {
         background-color: #ffffff;
         padding: 0;
@@ -224,6 +256,13 @@
   </style>
 </head>
 <body>
+
+  <!-- BOTÓN PARA DESCARGAR EN PDF / IMPRIMIR -->
+  <div class="no-print-container">
+    <button class="btn-print" onclick="window.print();">
+      🖨️ Imprimir / Guardar como PDF
+    </button>
+  </div>
 
   <div class="page-sheet">
     <div>
@@ -245,7 +284,7 @@
             <span class="data-value" id="p_cedula">-</span>
           </div>
           <div class="data-item">
-            <span class="data-label">Edad / Sexo</span>
+            <span class="data-label">Edad</span>
             <span class="data-value" id="p_edad_sexo">-</span>
           </div>
           <div class="data-item">
@@ -360,13 +399,16 @@
   <script>
     const params = new URLSearchParams(window.location.search);
 
-    // Búsqueda flexible de parámetros URL
-    function getP(key) {
-      const target = key.trim().toLowerCase().replace(/[\s_]+/g, '');
-      for (let [paramKey, val] of params.entries()) {
-        let cleanKey = decodeURIComponent(paramKey).replace(/\+/g, ' ').trim().toLowerCase().replace(/[\s_]+/g, '');
-        if (cleanKey === target) {
-          return decodeURIComponent(val).replace(/\+/g, ' ').trim();
+    // Búsqueda ultra-flexible de parámetros URL
+    function getP(keys) {
+      if (!Array.isArray(keys)) keys = [keys];
+      for (let key of keys) {
+        const target = key.trim().toLowerCase().replace(/[\s_]+/g, '');
+        for (let [paramKey, val] of params.entries()) {
+          let cleanKey = decodeURIComponent(paramKey).replace(/\+/g, ' ').trim().toLowerCase().replace(/[\s_]+/g, '');
+          if (cleanKey === target) {
+            return decodeURIComponent(val).replace(/\+/g, ' ').trim();
+          }
         }
       }
       return '';
@@ -405,16 +447,16 @@
       return (cleanVal === cleanExp || cleanVal.includes(cleanExp) || cleanVal === 'sí' || cleanVal === 'si' || cleanVal === 'true') ? 'X' : '&nbsp;&nbsp;';
     }
 
-    // CARGA DE ENCABEZADO COMPLETO (SUBTÍTULO, DIRECCIÓN, TELÉFONOS, EMAIL, REDES)
-    let tituloVal = getP('Titulo');
+    // CARGA DE ENCABEZADO COMPLETO Y TELÉFONO SECUNDARIO
+    let tituloVal = getP(['Titulo', 'Título']);
     if (tituloVal) document.getElementById('p_titulo').innerText = tituloVal;
 
-    let subHeader = getP('Subtitulo');
-    let dirHeader = getP('Direccion') || getP('Dirección');
-    let telf1 = getP('Numero de telefono principal') || getP('Telefono') || getP('Teléfono');
-    let telf2 = getP('Numero secundario') || getP('Numero de telefono secundario') || getP('Whatsapp') || getP('Celular');
-    let correo = getP('Correo') || getP('Email');
-    let redes = getP('Redes') || getP('Instagram') || getP('Facebook');
+    let subHeader = getP(['Subtitulo', 'Subtítulo']);
+    let dirHeader = getP(['Direccion', 'Dirección']);
+    let telf1 = getP(['Numero de telefono principal', 'Telefono principal', 'Telefono', 'Teléfono']);
+    let telf2 = getP(['Numero secundario', 'Numero de telefono secundario', 'Telefono secundario', 'Whatsapp', 'Celular']);
+    let correo = getP(['Correo', 'Email']);
+    let redes = getP(['Redes', 'Instagram', 'Facebook']);
 
     let subLines = [];
     if (subHeader) subLines.push(subHeader);
@@ -434,74 +476,73 @@
       document.getElementById('p_subtitulo').innerHTML = subLines.join('<br>');
     }
 
-    let tipoInforme = getP('Tipo de informe') || getP('TipoInforme');
+    let tipoInforme = getP(['Tipo de informe', 'TipoInforme']);
     if (tipoInforme) document.getElementById('p_tipo_informe').innerText = tipoInforme;
 
     // DATOS DEL PACIENTE
-    document.getElementById('p_nombre').innerText = getP('Nombre y Apellido') || getP('Nombre') || '-';
-    document.getElementById('p_cedula').innerText = getP('Cedula') || getP('Cédula') || '-';
+    document.getElementById('p_nombre').innerText = getP(['Nombre y Apellido', 'Nombre']) || '-';
+    document.getElementById('p_cedula').innerText = getP(['Cedula', 'Cédula']) || '-';
     
     let edadVal = getP('Edad');
-    let sexoVal = getP('Sexo');
-    let fnVal = getP('F / N') || getP('F/N') || getP('F_N') || getP('Fecha de Nacimiento');
+    let fnVal = getP(['F / N', 'F/N', 'F_N', 'Fecha de Nacimiento', 'Nacimiento']);
     
-    // Asignación estricta de Edad / Sexo
-    document.getElementById('p_edad_sexo').innerText = (edadVal ? edadVal + ' años' : '') + (sexoVal ? ' / ' + sexoVal : '');
+    // Asignación directa de Edad (sin la palabra "Sexo")
+    document.getElementById('p_edad_sexo').innerText = edadVal ? edadVal + ' años' : '-';
     document.getElementById('p_fecha').innerText = formatDate(getP('Fecha'));
-    document.getElementById('p_telefono').innerText = getP('Telefono') || getP('Teléfono') || '-';
+    document.getElementById('p_telefono').innerText = getP(['Telefono', 'Teléfono']) || '-';
     
-    // Asignación correcta de Fecha de Nacimiento en la casilla inferior derecha
+    // Fecha de Nacimiento limpia
     document.getElementById('p_f_nacimiento').innerText = formatDate(fnVal);
 
     // EQUIPO
-    let equipoRaw = getP('Equipo Utilizado') || getP('Equipo');
+    let equipoRaw = getP(['Equipo Utilizado', 'Equipo']);
     if (equipoRaw) {
       document.getElementById('p_equipo').innerText = equipoRaw.replace(/^se realiza u\.s\. con equipo/i, '').trim();
     }
 
     // RIÑÓN DERECHO
-    document.getElementById('rd_reg').innerHTML = checkX(getP('Rinon Derecho'), 'regular');
-    document.getElementById('rd_alt').innerHTML = checkX(getP('Rinon Derecho'), 'alterado');
-    document.getElementById('rd_med').innerText = getP('Medidas RD') || getP('Medidas') || '____';
-    document.getElementById('rd_hipo').innerHTML = checkX(getP('Ecogenicidad RD') || getP('Ecogenicidad'), 'hipo');
-    document.getElementById('rd_iso').innerHTML = checkX(getP('Ecogenicidad RD') || getP('Ecogenicidad'), 'iso');
-    document.getElementById('rd_hiper').innerHTML = checkX(getP('Ecogenicidad RD') || getP('Ecogenicidad'), 'hiper');
+    document.getElementById('rd_reg').innerHTML = checkX(getP(['Rinon Derecho', 'Rinón Derecho']), 'regular');
+    document.getElementById('rd_alt').innerHTML = checkX(getP(['Rinon Derecho', 'Rinón Derecho']), 'alterado');
+    document.getElementById('rd_med').innerText = getP(['Medidas RD', 'Medidas']) || '____';
+    document.getElementById('rd_hipo').innerHTML = checkX(getP(['Ecogenicidad RD', 'Ecogenicidad']), 'hipo');
+    document.getElementById('rd_iso').innerHTML = checkX(getP(['Ecogenicidad RD', 'Ecogenicidad']), 'iso');
+    document.getElementById('rd_hiper').innerHTML = checkX(getP(['Ecogenicidad RD', 'Ecogenicidad']), 'hiper');
 
-    let parRD = getP('Parenquima RD') || getP('Parenquima');
+    let parRD = getP(['Parenquima RD', 'Parenquima']);
     document.getElementById('rd_par_norm').innerHTML = checkX(parRD, 'normal');
     document.getElementById('rd_par_alt').innerHTML = checkX(parRD, 'alterada');
     document.getElementById('rd_par_cort').innerHTML = checkX(parRD, 'corteza');
     document.getElementById('rd_par_sin').innerHTML = checkX(parRD, 'no se evidencian');
 
-    document.getElementById('rd_loe').innerHTML = checkX(getP('LOE RD') || getP('LOE'), 'sí');
-    document.getElementById('rd_lit').innerHTML = checkX(getP('Litiasis RD') || getP('litiasis'), 'sí');
-    document.getElementById('rd_dil').innerHTML = checkX(getP('Dilatacion RD') || getP('dilatacion'), 'sí');
+    document.getElementById('rd_loe').innerHTML = checkX(getP(['LOE RD', 'LOE']), 'sí');
+    document.getElementById('rd_lit').innerHTML = checkX(getP(['Litiasis RD', 'litiasis']), 'sí');
+    document.getElementById('rd_dil').innerHTML = checkX(getP(['Dilatacion RD', 'dilatacion']), 'sí');
 
-    let descRD = getP('Descripcion RD') || getP('Descripcion de alteración');
+    let descRD = getP(['Descripcion RD', 'Descripcion de alteración', 'Descripción de alteración']);
     if (descRD) {
       document.getElementById('rd_desc_box').style.display = 'block';
       document.getElementById('rd_desc').innerText = descRD;
     }
 
     // RIÑÓN IZQUIERDO
-    document.getElementById('ri_reg').innerHTML = checkX(getP('Rinon Izquierdo'), 'regular');
-    document.getElementById('ri_alt').innerHTML = checkX(getP('Rinon Izquierdo'), 'alterado');
-    document.getElementById('ri_med').innerText = getP('Medidas RI') || getP('Medidas') || '____';
-    document.getElementById('ri_hipo').innerHTML = checkX(getP('Ecogenicidad RI') || getP('Ecogenicidad'), 'hipo');
-    document.getElementById('ri_iso').innerHTML = checkX(getP('Ecogenicidad RI') || getP('Ecogenicidad'), 'iso');
-    document.getElementById('ri_hiper').innerHTML = checkX(getP('Ecogenicidad RI') || getP('Ecogenicidad'), 'hiper');
+    document.getElementById('ri_reg').innerHTML = checkX(getP(['Rinon Izquierdo', 'Rinón Izquierdo']), 'regular');
+    document.getElementById('ri_alt').innerHTML = checkX(getP(['Rinon Izquierdo', 'Rinón Izquierdo']), 'alterado');
+    document.getElementById('ri_med').innerText = getP(['Medidas RI', 'Medidas']) || '____';
+    document.getElementById('ri_hipo').innerHTML = checkX(getP(['Ecogenicidad RI', 'Ecogenicidad']), 'hipo');
+    document.getElementById('ri_iso').innerHTML = checkX(getP(['Ecogenicidad RI', 'Ecogenicidad']), 'iso');
+    document.getElementById('ri_hiper').innerHTML = checkX(getP(['Ecogenicidad RI', 'Ecogenicidad']), 'hiper');
 
-    let parRI = getP('Parenquima RI') || getP('Parenquima');
+    let parRI = getP(['Parenquima RI', 'Parenquima']);
     document.getElementById('ri_par_norm').innerHTML = checkX(parRI, 'normal');
     document.getElementById('ri_par_alt').innerHTML = checkX(parRI, 'alterada');
     document.getElementById('ri_par_cort').innerHTML = checkX(parRI, 'corteza');
     document.getElementById('ri_par_sin').innerHTML = checkX(parRI, 'no se evidencian');
 
-    document.getElementById('ri_loe').innerHTML = checkX(getP('LOE RI') || getP('LOE'), 'sí');
-    document.getElementById('ri_lit').innerHTML = checkX(getP('Litiasis RI') || getP('litiasis'), 'sí');
-    document.getElementById('ri_dil').innerHTML = checkX(getP('Dilatacion RI') || getP('dilatacion'), 'sí');
+    document.getElementById('ri_loe').innerHTML = checkX(getP(['LOE RI', 'LOE']), 'sí');
+    document.getElementById('ri_lit').innerHTML = checkX(getP(['Litiasis RI', 'litiasis']), 'sí');
+    document.getElementById('ri_dil').innerHTML = checkX(getP(['Dilatacion RI', 'dilatacion']), 'sí');
 
-    let descRI = getP('Descripcion RI') || getP('Descripción de alteración');
+    let descRI = getP(['Descripcion RI', 'Descripción de alteración', 'Descripcion de alteración']);
     if (descRI) {
       document.getElementById('ri_desc_box').style.display = 'block';
       document.getElementById('ri_desc').innerText = descRI;
@@ -510,10 +551,10 @@
     // VEJIGA Y VOLÚMENES
     document.getElementById('v_pleni').innerHTML = checkX(getP('Vejiga'), 'plenificada');
     document.getElementById('v_pocop').innerHTML = checkX(getP('Vejiga'), 'poco plenificada');
-    document.getElementById('v_pared').innerText = getP('Pared') || getP('pared') || '__';
-    document.getElementById('v_sinalt').innerHTML = checkX(getP('Sin Alteraciones') || getP('sin alteraciones'), 'sí');
-    document.getElementById('v_loe').innerHTML = checkX(getP('LOE Vejiga') || getP('imagen de LOE en su interior'), 'sí');
-    document.getElementById('v_lit').innerHTML = checkX(getP('Litiasis Vejiga') || getP('Litiasis'), 'sí');
+    document.getElementById('v_pared').innerText = getP(['Pared', 'pared']) || '__';
+    document.getElementById('v_sinalt').innerHTML = checkX(getP(['Sin Alteraciones', 'sin alteraciones']), 'sí');
+    document.getElementById('v_loe').innerHTML = checkX(getP(['LOE Vejiga', 'imagen de LOE en su interior']), 'sí');
+    document.getElementById('v_lit').innerHTML = checkX(getP(['Litiasis Vejiga', 'Litiasis']), 'sí');
     document.getElementById('v_volpre').innerText = getP('Volumen Premiccional') || '____';
     document.getElementById('v_volpost').innerText = getP('Volumen Postmiccional') || '____';
 
@@ -522,11 +563,11 @@
     document.getElementById('p_hete').innerHTML = checkX(getP('Prostata'), 'heterogénea');
     document.getElementById('p_creg').innerHTML = checkX(getP('Prostata'), 'contornos regulares');
     document.getElementById('p_cirr').innerHTML = checkX(getP('Prostata'), 'irregulares');
-    document.getElementById('p_vol').innerText = getP('Volumen Prostata') || getP('volumen') || '____';
+    document.getElementById('p_vol').innerText = getP(['Volumen Prostata', 'volumen']) || '____';
     document.getElementById('p_ipp').innerText = getP('IPP') || '____';
 
     // IMPRESIÓN DIAGNÓSTICA
-    document.getElementById('p_idx').innerText = getP('IDX Impresion Diagnostica') || getP('Impresion Diagnostica') || '-';
+    document.getElementById('p_idx').innerText = getP(['IDX Impresion Diagnostica', 'Impresion Diagnostica']) || '-';
 
     // FIRMA Y PIE DE PÁGINA
     if (getP('Medico tratante')) document.getElementById('p_firma_medico').innerText = getP('Medico tratante');
