@@ -58,7 +58,7 @@
       font-size: 8.5pt;
       color: #4a5568;
       margin: 0;
-      line-height: 1.25;
+      line-height: 1.35;
     }
 
     /* FICHA PACIENTE */
@@ -348,7 +348,7 @@
 
     <!-- PIE DE PÁGINA Y FIRMA DEL MÉDICO -->
     <div class="footer-container">
-      <div style="font-size: 8pt; color: #a0aec0;" id="p_contacto"></div>
+      <div style="font-size: 8pt; color: #a0aec0; line-height: 1.3;" id="p_contacto"></div>
       <div class="doctor-signature">
         <div class="signature-line"></div>
         <div class="doctor-name" id="p_firma_medico">Dra. Medico Tratante</div>
@@ -372,7 +372,7 @@
       return '';
     }
 
-    // Formateador robusto de fechas a DD/MM/AAAA
+    // Formateador de fechas a DD/MM/AAAA
     function formatDate(dateStr) {
       if (!dateStr) return '-';
       let clean = dateStr.trim();
@@ -405,19 +405,33 @@
       return (cleanVal === cleanExp || cleanVal.includes(cleanExp) || cleanVal === 'sí' || cleanVal === 'si' || cleanVal === 'true') ? 'X' : '&nbsp;&nbsp;';
     }
 
-    // CARGA DE ENCABEZADO Y SUBTÍTULO
+    // CARGA DE ENCABEZADO COMPLETO (SUBTÍTULO, DIRECCIÓN, TELÉFONOS, EMAIL, REDES)
     let tituloVal = getP('Titulo');
     if (tituloVal) document.getElementById('p_titulo').innerText = tituloVal;
-    
+
+    let subHeader = getP('Subtitulo');
     let dirHeader = getP('Direccion') || getP('Dirección');
-    let telfHeader = getP('Numero de telefono principal') || getP('Telefono') || getP('Teléfono');
-    
-    let subtituloParts = [];
-    if (dirHeader) subtituloParts.push(dirHeader);
-    if (telfHeader) subtituloParts.push('Telfs: ' + telfHeader);
-    
-    if (subtituloParts.length > 0) {
-      document.getElementById('p_subtitulo').innerText = subtituloParts.join(' | ');
+    let telf1 = getP('Numero de telefono principal') || getP('Telefono') || getP('Teléfono');
+    let telf2 = getP('Numero de telefono secundario') || getP('Whatsapp') || getP('Celular');
+    let correo = getP('Correo') || getP('Email');
+    let redes = getP('Redes') || getP('Instagram') || getP('Facebook');
+
+    let subLines = [];
+    if (subHeader) subLines.push(subHeader);
+    if (dirHeader) subLines.push(dirHeader);
+
+    let contactParts = [];
+    if (telf1) contactParts.push('Telf: ' + telf1);
+    if (telf2) contactParts.push('Wsp: ' + telf2);
+    if (correo) contactParts.push('Email: ' + correo);
+    if (redes) contactParts.push('Redes: ' + redes);
+
+    if (contactParts.length > 0) {
+      subLines.push(contactParts.join(' | '));
+    }
+
+    if (subLines.length > 0) {
+      document.getElementById('p_subtitulo').innerHTML = subLines.join('<br>');
     }
 
     let tipoInforme = getP('Tipo de informe') || getP('TipoInforme');
@@ -430,6 +444,10 @@
     let edadVal = getP('Edad');
     let sexoVal = getP('F / N') || getP('F/N') || getP('Sexo') || getP('F_N');
     
+    if (sexoVal && sexoVal.includes('/')) {
+      sexoVal = getP('Sexo') || getP('F / N') || '-';
+    }
+
     document.getElementById('p_edad_sexo').innerText = (edadVal ? edadVal + ' años' : '') + (sexoVal ? ' / ' + sexoVal : '');
     document.getElementById('p_fecha').innerText = formatDate(getP('Fecha'));
     document.getElementById('p_telefono').innerText = getP('Telefono') || getP('Teléfono') || '-';
@@ -468,7 +486,7 @@
     // RIÑÓN IZQUIERDO
     document.getElementById('ri_reg').innerHTML = checkX(getP('Rinon Izquierdo'), 'regular');
     document.getElementById('ri_alt').innerHTML = checkX(getP('Rinon Izquierdo'), 'alterado');
-    document.getElementById('ri_med').innerText = getP('Medidas RI') || getP('Medidas'), '____';
+    document.getElementById('ri_med').innerText = getP('Medidas RI') || getP('Medidas') || '____';
     document.getElementById('ri_hipo').innerHTML = checkX(getP('Ecogenicidad RI') || getP('Ecogenicidad'), 'hipo');
     document.getElementById('ri_iso').innerHTML = checkX(getP('Ecogenicidad RI') || getP('Ecogenicidad'), 'iso');
     document.getElementById('ri_hiper').innerHTML = checkX(getP('Ecogenicidad RI') || getP('Ecogenicidad'), 'hiper');
@@ -514,10 +532,11 @@
     if (getP('Medico tratante')) document.getElementById('p_firma_medico').innerText = getP('Medico tratante');
     if (getP('Especialidad Medica')) document.getElementById('p_firma_esp').innerText = getP('Especialidad Medica');
 
-    let contactoParts = [];
-    if (dirHeader) contactoParts.push(dirHeader);
-    if (telfHeader) contactoParts.push('Telf: ' + telfHeader);
-    document.getElementById('p_contacto').innerText = contactoParts.join(' | ');
+    let footerParts = [];
+    if (dirHeader) footerParts.push(dirHeader);
+    if (telf1) footerParts.push('Telf: ' + telf1);
+    if (telf2) footerParts.push('Wsp: ' + telf2);
+    document.getElementById('p_contacto').innerHTML = footerParts.join('<br>');
   </script>
 </body>
 </html>
