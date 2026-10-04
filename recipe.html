@@ -206,14 +206,14 @@
             font-size: 9.5pt;
             line-height: 1.5;
             color: #1e293b;
-            min-height: 72mm;
+            min-height: 68mm;
             white-space: pre-wrap;
             word-wrap: break-word;
             position: relative;
             z-index: 3;
         }
 
-        /* PIE DE PÁGINA (FIRMA, SELLO Y QR DEBAJO) */
+        /* PIE DE PÁGINA (FIRMA, SELLO DEBAJO Y QR GRANDE) */
         .footer-container {
             position: absolute;
             bottom: 5mm;
@@ -224,20 +224,20 @@
 
         .footer-flex-row {
             display: flex;
-            align-items: flex-start;
+            align-items: flex-end;
             justify-content: space-between;
         }
 
-        .signature-block {
+        .left-footer-block {
             flex: 1;
             padding-right: 15px;
-            padding-top: 15px;
         }
 
         .signature-line-wrapper {
             display: flex;
             align-items: baseline;
             gap: 4px;
+            margin-bottom: 8px;
         }
 
         .signature-label {
@@ -253,48 +253,35 @@
             height: 1px;
         }
 
-        .doctor-title-under {
-            font-size: 8pt;
-            font-weight: 700;
-            color: #1a365d;
-            margin-top: 5px;
-            padding-left: 80px;
-        }
-
-        .seal-qr-block {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 140px;
-        }
-
-        .seal-header-wrapper {
+        .seal-wrapper-under {
             display: flex;
             align-items: flex-start;
-            gap: 6px;
-            width: 100%;
+            gap: 8px;
+            margin-top: 4px;
+            padding-left: 10px;
         }
 
         .seal-box-large {
-            width: 100px;
-            height: 55px;
+            width: 140px;
+            height: 65px;
             border: 1.5px solid #1a365d;
             background: #ffffff;
             border-radius: 2px;
         }
 
-        .qr-wrapper {
-            margin-top: 6px;
+        .qr-wrapper-right {
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-end;
         }
 
+        /* TAMAÑO DEL QR AGRANDADO NOTABLEMENTE */
         .qr-img-box {
-            width: 80px;
+            width: 140px;
             height: auto;
-            max-height: 80px;
+            max-height: 140px;
             object-fit: contain;
             display: block;
         }
@@ -368,24 +355,21 @@
                 <!-- PIE DE PÁGINA -->
                 <div class="footer-container">
                     <div class="footer-flex-row">
-                        <!-- FIRMA Y TÍTULO -->
-                        <div class="signature-block">
+                        <!-- FIRMA Y SELLO DEBAJO -->
+                        <div class="left-footer-block">
                             <div class="signature-line-wrapper">
                                 <span class="signature-label">Firma Médico:</span>
                                 <div class="signature-line"></div>
                             </div>
-                            <div class="doctor-title-under" id="param-foot-titulo-1">CLÍNICA LAS VEGAS</div>
-                        </div>
-
-                        <!-- SELLO Y QR DEBAJO -->
-                        <div class="seal-qr-block">
-                            <div class="seal-header-wrapper">
+                            <div class="seal-wrapper-under">
                                 <span class="signature-label">Sello:</span>
                                 <div class="seal-box-large"></div>
                             </div>
-                            <div class="qr-wrapper">
-                                <img src="https://lh3.googleusercontent.com/d/1igeLPC_bosIL5i43jTTKQO3L5JEJSi6P" class="qr-img-box" alt="QR WhatsApp" />
-                            </div>
+                        </div>
+
+                        <!-- QR WHATSAPP AGRANDADO EN LA DERECHA -->
+                        <div class="qr-wrapper-right">
+                            <img src="https://lh3.googleusercontent.com/d/1igeLPC_bosIL5i43jTTKQO3L5JEJSi6P" class="qr-img-box" alt="QR WhatsApp" />
                         </div>
                     </div>
                 </div>
@@ -431,24 +415,21 @@
                 <!-- PIE DE PÁGINA -->
                 <div class="footer-container">
                     <div class="footer-flex-row">
-                        <!-- FIRMA Y TÍTULO -->
-                        <div class="signature-block">
+                        <!-- FIRMA Y SELLO DEBAJO -->
+                        <div class="left-footer-block">
                             <div class="signature-line-wrapper">
                                 <span class="signature-label">Firma Médico:</span>
                                 <div class="signature-line"></div>
                             </div>
-                            <div class="doctor-title-under" id="param-foot-titulo-2">CLÍNICA LAS VEGAS</div>
-                        </div>
-
-                        <!-- SELLO Y QR DEBAJO -->
-                        <div class="seal-qr-block">
-                            <div class="seal-header-wrapper">
+                            <div class="seal-wrapper-under">
                                 <span class="signature-label">Sello:</span>
                                 <div class="seal-box-large"></div>
                             </div>
-                            <div class="qr-wrapper">
-                                <img src="https://lh3.googleusercontent.com/d/1igeLPC_bosIL5i43jTTKQO3L5JEJSi6P" class="qr-img-box" alt="QR WhatsApp" />
-                            </div>
+                        </div>
+
+                        <!-- QR WHATSAPP AGRANDADO EN LA DERECHA -->
+                        <div class="qr-wrapper-right">
+                            <img src="https://lh3.googleusercontent.com/d/1igeLPC_bosIL5i43jTTKQO3L5JEJSi6P" class="qr-img-box" alt="QR WhatsApp" />
                         </div>
                     </div>
                 </div>
@@ -489,14 +470,12 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            const titulo = getQueryParam('Titulo');
-            const medico = getQueryParam('Medico');
             const rawFecha = getQueryParam('Fecha');
             const fecha = formatToDDMMYYYY(rawFecha);
 
             const nombre = getQueryParam('Nombre') || getQueryParam('Nombre y Apellido');
             const cedula = getQueryParam('Cedula') || getQueryParam('Cédula');
-            const genero = getQueryParam('Genero') || getQueryParam('Género') || getQueryParam('Sexo');
+            const genero = getQueryParam('Sexo') || getQueryParam('Genero') || getQueryParam('Género');
             const diagnostico = getQueryParam('Diagnostico') || getQueryParam('Diagnóstico') || getQueryParam('IDX');
             
             const recipe = getQueryParam('Recipe') || getQueryParam('Récipe');
@@ -518,12 +497,6 @@
             setText('param-fecha-2', fecha);
             setText('param-diag-1', diagnostico);
             setText('param-diag-2', diagnostico);
-
-            // Pie de página (Título del centro médico)
-            if (titulo) {
-                setText('param-foot-titulo-1', titulo);
-                setText('param-foot-titulo-2', titulo);
-            }
 
             // Contenidos
             setText('param-recipe', recipe);
