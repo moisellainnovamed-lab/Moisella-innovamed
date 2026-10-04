@@ -384,17 +384,6 @@
         Vol. Postmiccional: <span class="val" id="v_volpost">____</span> cc.
       </div>
 
-      <!-- PRÓSTATA -->
-      <div class="organ-block">
-        <span class="organ-name">Próstata:</span> 
-        homogénea (<span class="mark" id="p_homo">&nbsp;&nbsp;</span>) 
-        heterogénea (<span class="mark" id="p_hete">&nbsp;&nbsp;</span>), 
-        contornos regulares (<span class="mark" id="p_creg">&nbsp;&nbsp;</span>) 
-        irregulares (<span class="mark" id="p_cirr">&nbsp;&nbsp;</span>), 
-        volumen: <span class="val" id="p_vol">____</span> cc, 
-        IPP: <span class="val" id="p_ipp">____</span> mm.
-      </div>
-
       <!-- IMPRESIÓN DIAGNÓSTICA -->
       <div class="diagnostic-container">
         <div class="diagnostic-title">Impresión Diagnóstica</div>
@@ -464,7 +453,7 @@
       return (cleanVal === cleanExp || cleanVal.includes(cleanExp) || cleanVal === 'sí' || cleanVal === 'si' || cleanVal === 'true') ? 'X' : '&nbsp;&nbsp;';
     }
 
-    // LOGO DINÁMICO (si viene en la URL lo sobreescribe, de lo contrario mantiene el logo de Drive por defecto)
+    // LOGO DINÁMICO
     let logoUrl = getP(['Logo', 'LogoUrl', 'Imagen', 'Logopng']);
     if (logoUrl) {
       document.getElementById('p_logo').src = logoUrl;
@@ -577,14 +566,6 @@
     document.getElementById('v_lit').innerHTML = checkX(getP(['Litiasis Vejiga', 'Litiasis']), 'sí');
     document.getElementById('v_volpre').innerText = getP('Volumen Premiccional') || '____';
     document.getElementById('v_volpost').innerText = getP('Volumen Postmiccional') || '____';
-
-    // PRÓSTATA
-    document.getElementById('p_homo').innerHTML = checkX(getP('Prostata'), 'homogénea');
-    document.getElementById('p_hete').innerHTML = checkX(getP('Prostata'), 'heterogénea');
-    document.getElementById('p_creg').innerHTML = checkX(getP('Prostata'), 'contornos regulares');
-    document.getElementById('p_cirr').innerHTML = checkX(getP('Prostata'), 'irregulares');
-    document.getElementById('p_vol').innerText = getP(['Volumen Prostata', 'volumen']) || '____';
-    document.getElementById('p_ipp').innerText = getP('IPP') || '____';
 
     // IMPRESIÓN DIAGNÓSTICA
     document.getElementById('p_idx').innerText = getP(['IDX Impresion Diagnostica', 'Impresion Diagnostica']) || '-';
