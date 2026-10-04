@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,79 +5,91 @@
   <title>Informe de Ecosonograma Urológico</title>
   <style>
     @page {
-      size: letter;
-      margin: 15mm 20mm;
+      size: letter portrait;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
       color: #2c3e50;
+      background-color: #e2e8f0;
       margin: 0;
-      padding: 0;
-      font-size: 11pt;
-      line-height: 1.4;
-      background-color: #ffffff;
-    }
-
-    /* ENCABEZADO Y DATOS DEL CENTRO MÉDICO */
-    .header-container {
+      padding: 20px 0;
       display: flex;
+      justify-content: center;
+      font-size: 10pt;
+      line-height: 1.35;
+    }
+
+    /* CONTENEDOR TAMAÑO CARTA FIJO */
+    .page-sheet {
+      width: 215.9mm;
+      height: 279.4mm;
+      background-color: #ffffff;
+      padding: 15mm 18mm;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      align-items: center;
-      border-bottom: 2pt solid #2c3e50;
-      padding-bottom: 12px;
-      margin-bottom: 15px;
+      position: relative;
     }
 
-    .clinic-info {
-      flex: 1;
+    /* ENCABEZADO */
+    .header-container {
+      border-bottom: 2pt solid #1a365d;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    .clinic-name {
-      font-size: 16pt;
-      font-weight: bold;
+    .clinic-title {
+      font-size: 15pt;
+      font-weight: 800;
       color: #1a365d;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin: 0 0 4px 0;
+      margin: 0 0 2px 0;
     }
 
-    .clinic-details {
+    .clinic-subtitle {
       font-size: 8.5pt;
       color: #4a5568;
       margin: 0;
-      line-height: 1.3;
+      line-height: 1.25;
     }
 
     .doc-title-container {
       text-align: center;
-      margin: 15px 0 20px 0;
+      margin: 8px 0 12px 0;
     }
 
     .doc-title {
-      font-size: 15pt;
-      font-weight: bold;
+      font-size: 13pt;
+      font-weight: 700;
       color: #1a365d;
       text-transform: uppercase;
       letter-spacing: 1px;
       border-bottom: 1px solid #cbd5e0;
       display: inline-block;
-      padding-bottom: 4px;
+      padding-bottom: 2px;
     }
 
-    /* SECCIÓN DE DATOS DEL PACIENTE */
+    /* FICHA PACIENTE */
     .patient-card {
       background-color: #f7fafc;
       border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      padding: 10px 15px;
-      margin-bottom: 20px;
+      border-radius: 5px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
     }
 
     .patient-grid {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
-      gap: 10px 15px;
+      gap: 6px 12px;
     }
 
     .data-item {
@@ -87,62 +98,58 @@
     }
 
     .data-label {
-      font-size: 8pt;
-      font-weight: bold;
+      font-size: 7.5pt;
+      font-weight: 700;
       text-transform: uppercase;
       color: #718096;
-      margin-bottom: 2px;
     }
 
     .data-value {
-      font-size: 10pt;
+      font-size: 9.5pt;
       font-weight: 600;
       color: #1a202c;
+      min-height: 14px;
     }
 
-    /* SECCIÓN DEL EQUIPO UTILIZADO */
+    /* EQUIPO UTILIZADO */
     .equipment-box {
-      font-size: 9.5pt;
-      margin-bottom: 15px;
-      padding: 6px 10px;
+      font-size: 9pt;
+      margin-bottom: 12px;
+      padding: 5px 8px;
       background-color: #edf2f7;
       border-left: 3px solid #3182ce;
       color: #2d3748;
     }
 
-    /* SECCIONES Y BLOQUES DE HALLAZGOS */
-    .section-title {
-      font-size: 11pt;
-      font-weight: bold;
-      color: #2b6cb0;
-      border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 3px;
-      margin-top: 15px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-
+    /* BLOQUES DE ÓRGANOS */
     .organ-block {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       text-align: justify;
+      font-size: 9.5pt;
     }
 
-    .checkbox-mark {
-      font-weight: bold;
-      font-family: monospace;
+    .organ-name {
+      font-weight: 700;
       color: #1a365d;
     }
 
-    .value-highlight {
-      font-weight: bold;
+    .mark {
+      font-weight: 800;
+      font-family: monospace;
+      color: #1a365d;
+      padding: 0 1px;
+    }
+
+    .val {
+      font-weight: 700;
       color: #2d3748;
       border-bottom: 1px dotted #a0aec0;
-      padding: 0 4px;
+      padding: 0 3px;
     }
 
     .desc-box {
-      margin-top: 5px;
-      padding-left: 10px;
+      margin-top: 4px;
+      padding-left: 8px;
       border-left: 2px solid #cbd5e0;
       font-style: italic;
       color: #4a5568;
@@ -150,191 +157,264 @@
 
     /* IMPRESIÓN DIAGNÓSTICA */
     .diagnostic-container {
-      margin-top: 20px;
+      margin-top: 10px;
       background-color: #f7fafc;
       border: 1px solid #cbd5e0;
-      border-radius: 6px;
-      padding: 12px 15px;
+      border-radius: 5px;
+      padding: 10px 12px;
+      flex-grow: 1;
     }
 
     .diagnostic-title {
-      font-size: 11pt;
-      font-weight: bold;
+      font-size: 10pt;
+      font-weight: 700;
       color: #1a365d;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .diagnostic-content {
-      font-size: 10.5pt;
+      font-size: 9.5pt;
       color: #2d3748;
       white-space: pre-line;
     }
 
     /* FIRMA Y PIE DE PÁGINA */
     .footer-container {
-      margin-top: 40px;
+      margin-top: 15px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      page-break-inside: avoid;
     }
 
     .doctor-signature {
       text-align: center;
-      width: 250px;
+      width: 220px;
     }
 
     .signature-line {
       border-top: 1px solid #718096;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
     .doctor-name {
-      font-weight: bold;
-      font-size: 10pt;
+      font-weight: 700;
+      font-size: 9.5pt;
       color: #1a365d;
     }
 
     .doctor-spec {
-      font-size: 8.5pt;
+      font-size: 8pt;
       color: #718096;
+    }
+
+    /* OCULTAR ELEMENTOS AL IMPRIMIR */
+    @media print {
+      body {
+        background-color: #ffffff;
+        padding: 0;
+      }
+      .page-sheet {
+        box-shadow: none;
+        width: 100%;
+        height: 100vh;
+        padding: 10mm 15mm;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- ENCABEZADO CON DATOS DEL CENTRO MÉDICO -->
-  <div class="header-container">
-    <div class="clinic-info">
-      <div class="clinic-name">MINI CENTRO LAS VEGAS</div>
-      <div class="clinic-details">
-        Semisótano, entrada Urb. Palo Verde a 100 mts de la Redoma de Petare - Local Nº 9<br>
-        Telfs: 0212-2350327 / 0212-2379235
+  <div class="page-sheet">
+    <div>
+      <!-- ENCABEZADO CENTRO MÉDICO -->
+      <div class="header-container">
+        <div class="clinic-title" id="p_titulo">MINI CENTRO LAS VEGAS</div>
+        <div class="clinic-subtitle" id="p_subtitulo">
+          Semisótano, entrada Urb. Palo Verde a 100 mts de la Redoma de Petare - Local Nº 9<br>
+          Telfs: 0212-2350327 / 0212-2379235
+        </div>
+      </div>
+
+      <!-- TÍTULO INFORME -->
+      <div class="doc-title-container">
+        <div class="doc-title" id="p_tipo_informe">Ecosonograma Urológico</div>
+      </div>
+
+      <!-- DATOS PACIENTE Y MÉDICO -->
+      <div class="patient-card">
+        <div class="patient-grid">
+          <div class="data-item">
+            <span class="data-label">Nombre y Apellido</span>
+            <span class="data-value" id="p_nombre">-</span>
+          </div>
+          <div class="data-item">
+            <span class="data-label">Cédula de Identidad</span>
+            <span class="data-value" id="p_cedula">-</span>
+          </div>
+          <div class="data-item">
+            <span class="data-label">Edad / Sexo</span>
+            <span class="data-value" id="p_edad_sexo">-</span>
+          </div>
+          <div class="data-item">
+            <span class="data-label">Fecha</span>
+            <span class="data-value" id="p_fecha">-</span>
+          </div>
+          <div class="data-item">
+            <span class="data-label">Teléfono</span>
+            <span class="data-value" id="p_telefono">-</span>
+          </div>
+          <div class="data-item">
+            <span class="data-label">Médico Tratante</span>
+            <span class="data-value" id="p_medico">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- EQUIPO -->
+      <div class="equipment-box">
+        Se realiza U.S. con equipo <strong id="p_equipo">EDAN DUS 3 con transductor convex de 3,5 MHz</strong> mediante cortes sagitales, coronales y axiales observándose:
+      </div>
+
+      <!-- RIÑÓN DERECHO -->
+      <div class="organ-block">
+        <span class="organ-name">Riñón Derecho:</span> 
+        tamaño y configuración regular (<span class="mark" id="rd_reg">&nbsp;&nbsp;</span>), 
+        alterado (<span class="mark" id="rd_alt">&nbsp;&nbsp;</span>), 
+        medidas <span class="val" id="rd_med">____</span> mm. 
+        Ecogenicidad hipo (<span class="mark" id="rd_hipo">&nbsp;&nbsp;</span>) 
+        iso (<span class="mark" id="rd_iso">&nbsp;&nbsp;</span>) 
+        hiper (<span class="mark" id="rd_hiper">&nbsp;&nbsp;</span>). 
+        Parénquima normal (<span class="mark" id="rd_par_norm">&nbsp;&nbsp;</span>) 
+        alterada (<span class="mark" id="rd_par_alt">&nbsp;&nbsp;</span>), 
+        corteza (<span class="mark" id="rd_par_cort">&nbsp;&nbsp;</span>), 
+        no se evidencian alteraciones (<span class="mark" id="rd_par_sin">&nbsp;&nbsp;</span>), 
+        se evidencia LOE (<span class="mark" id="rd_loe">&nbsp;&nbsp;</span>) 
+        litiasis (<span class="mark" id="rd_lit">&nbsp;&nbsp;</span>) 
+        dilatación pielocalicial grado (<span class="mark" id="rd_dil">&nbsp;&nbsp;</span>).
+        <div id="rd_desc_box" class="desc-box" style="display:none;">
+          <strong>Descripción de alteración:</strong> <span id="rd_desc"></span>
+        </div>
+      </div>
+
+      <!-- RIÑÓN IZQUIERDO -->
+      <div class="organ-block">
+        <span class="organ-name">Riñón Izquierdo:</span> 
+        tamaño y configuración regular (<span class="mark" id="ri_reg">&nbsp;&nbsp;</span>), 
+        alterado (<span class="mark" id="ri_alt">&nbsp;&nbsp;</span>), 
+        medidas <span class="val" id="ri_med">____</span> mm. 
+        Ecogenicidad hipo (<span class="mark" id="ri_hipo">&nbsp;&nbsp;</span>) 
+        iso (<span class="mark" id="ri_iso">&nbsp;&nbsp;</span>) 
+        hiper (<span class="mark" id="ri_hiper">&nbsp;&nbsp;</span>). 
+        Parénquima normal (<span class="mark" id="ri_par_norm">&nbsp;&nbsp;</span>) 
+        alterada (<span class="mark" id="ri_par_alt">&nbsp;&nbsp;</span>), 
+        corteza (<span class="mark" id="ri_par_cort">&nbsp;&nbsp;</span>), 
+        no se evidencian alteraciones (<span class="mark" id="ri_par_sin">&nbsp;&nbsp;</span>), 
+        se evidencia LOE (<span class="mark" id="ri_loe">&nbsp;&nbsp;</span>) 
+        litiasis (<span class="mark" id="ri_lit">&nbsp;&nbsp;</span>) 
+        dilatación pielocalicial grado (<span class="mark" id="ri_dil">&nbsp;&nbsp;</span>).
+        <div id="ri_desc_box" class="desc-box" style="display:none;">
+          <strong>Descripción de alteración:</strong> <span id="ri_desc"></span>
+        </div>
+      </div>
+
+      <!-- VEJIGA Y VOLÚMENES -->
+      <div class="organ-block">
+        <span class="organ-name">Vejiga:</span> 
+        plenificada (<span class="mark" id="v_pleni">&nbsp;&nbsp;</span>) 
+        poco plenificada (<span class="mark" id="v_pocop">&nbsp;&nbsp;</span>), 
+        pared <span class="val" id="v_pared">__</span> mm, 
+        sin alteraciones (<span class="mark" id="v_sinalt">&nbsp;&nbsp;</span>), 
+        imagen de LOE en su interior (<span class="mark" id="v_loe">&nbsp;&nbsp;</span>) 
+        litiasis (<span class="mark" id="v_lit">&nbsp;&nbsp;</span>).<br>
+        Vol. Premiccional: <span class="val" id="v_volpre">____</span> cc &nbsp;&nbsp;|&nbsp;&nbsp; 
+        Vol. Postmiccional: <span class="val" id="v_volpost">____</span> cc.
+      </div>
+
+      <!-- PRÓSTATA -->
+      <div class="organ-block">
+        <span class="organ-name">Próstata:</span> 
+        homogénea (<span class="mark" id="p_homo">&nbsp;&nbsp;</span>) 
+        heterogénea (<span class="mark" id="p_hete">&nbsp;&nbsp;</span>), 
+        contornos regulares (<span class="mark" id="p_creg">&nbsp;&nbsp;</span>) 
+        irregulares (<span class="mark" id="p_cirr">&nbsp;&nbsp;</span>), 
+        volumen: <span class="val" id="p_vol">____</span> cc, 
+        IPP: <span class="val" id="p_ipp">____</span> mm.
+      </div>
+
+      <!-- IMPRESIÓN DIAGNÓSTICA -->
+      <div class="diagnostic-container">
+        <div class="diagnostic-title">Impresión Diagnóstica</div>
+        <div class="diagnostic-content" id="p_idx">-</div>
+      </div>
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <div class="footer-container">
+      <div style="font-size: 8pt; color: #a0aec0;" id="p_contacto">
+        <!-- Contactos -->
+      </div>
+      <div class="doctor-signature">
+        <div class="signature-line"></div>
+        <div class="doctor-name" id="p_firma_medico">Dra. Medico Tratante</div>
+        <div class="doctor-spec" id="p_firma_esp">Especialista / Ecografista</div>
       </div>
     </div>
   </div>
 
-  <!-- TÍTULO DEL INFORME -->
-  <div class="doc-title-container">
-    <div class="doc-title">Ecosonograma Urológico</div>
-  </div>
+  <script>
+    // LECTURA DE PARÁMETROS URL DE APPSHEET
+    const urlParams = new URLSearchParams(window.location.search);
 
-  <!-- DATOS DEL PACIENTE Y MÉDICO TRATANTE -->
-  <div class="patient-card">
-    <div class="patient-grid">
-      <div class="data-item">
-        <span class="data-label">Nombre y Apellido</span>
-        <span class="data-value"><<[Nombre y Apellido]>></span>
-      </div>
-      <div class="data-item">
-        <span class="data-label">Cédula de Identidad</span>
-        <span class="data-value"><<[Cedula]>></span>
-      </div>
-      <div class="data-item">
-        <span class="data-label">Edad / Sexo</span>
-        <span class="data-value"><<[Edad]>> años / <<[F / N]>></span>
-      </div>
-      <div class="data-item">
-        <span class="data-label">Fecha</span>
-        <span class="data-value"><<[Fecha]>></span>
-      </div>
-      <div class="data-item">
-        <span class="data-label">Teléfono</span>
-        <span class="data-value"><<[Telefono]>></span>
-      </div>
-      <div class="data-item">
-        <span class="data-label">Médico Tratante</span>
-        <span class="data-value"><<[Medico tratante]>></span>
-      </div>
-    </div>
-  </div>
+    function getP(param) {
+      return urlParams.get(param) || '';
+    }
 
-  <!-- EQUIPO UTILIZADO -->
-  <div class="equipment-box">
-    Se realiza U.S. con equipo <strong><<[Equipo Utilizado]>></strong> mediante cortes sagitales, coronales y axiales observándose:
-  </div>
+    function checkX(val, expected) {
+      if (!val) return '&nbsp;&nbsp;';
+      const cleanVal = val.toString().trim().toLowerCase();
+      const cleanExp = expected.toString().trim().toLowerCase();
+      return (cleanVal === cleanExp || cleanVal.includes(cleanExp) || cleanVal === 'sí' || cleanVal === 'si' || cleanVal === 'true') ? 'X' : '&nbsp;&nbsp;';
+    }
 
-  <!-- RIÑÓN DERECHO -->
-  <div class="organ-block">
-    <strong>Riñón Derecho:</strong>
-    tamaño y configuración regular <span class="checkbox-mark">(&nbsp;<<IF([Rinon Derecho]="Regular", "X", "")>>&nbsp;)</span>,
-    alterado <span class="checkbox-mark">(&nbsp;<<IF([Rinon Derecho]="Alterado", "X", "")>>&nbsp;)</span>,
-    medidas <span class="value-highlight"><<[Medidas]>></span> mm.
-    Ecogenicidad hipo <span class="checkbox-mark">(&nbsp;<<IF([Ecogenicidad]="hipo", "X", "")>>&nbsp;)</span>
-    iso <span class="checkbox-mark">(&nbsp;<<IF([Ecogenicidad]="iso", "X", "")>>&nbsp;)</span>
-    hiper <span class="checkbox-mark">(&nbsp;<<IF([Ecogenicidad]="hiper", "X", "")>>&nbsp;)</span>.
-    Parénquima normal <span class="checkbox-mark">(&nbsp;<<IF(IN("normal", SPLIT([Parenquima ], " , ")), "X", "")>>&nbsp;)</span>
-    alterada <span class="checkbox-mark">(&nbsp;<<IF(IN("alterada", SPLIT([Parenquima ], " , ")), "X", "")>>&nbsp;)</span>,
-    corteza <span class="checkbox-mark">(&nbsp;<<IF(IN("corteza", SPLIT([Parenquima ], " , ")), "X", "")>>&nbsp;)</span>,
-    no se evidencian alteraciones <span class="checkbox-mark">(&nbsp;<<IF(IN("no se evidencian alteraciones", SPLIT([Parenquima ], " , ")), "X", "")>>&nbsp;)</span>,
-    se evidencia LOE <span class="checkbox-mark">(&nbsp;<<IF([LOE]="Sí", "X", "")>>&nbsp;)</span>
-    litiasis <span class="checkbox-mark">(&nbsp;<<IF([litiasis]="Sí", "X", "")>>&nbsp;)</span>
-    dilatación pielocalicial grado <span class="checkbox-mark">(&nbsp;<<IF([dilatación pielocalicial grado ]="Sí", "X", "")>>&nbsp;)</span>.
-    <<IF(ISNOTEMPTY([Descripcion de alteración ]), CONCATENATE('<div class="desc-box"><strong>Descripción de alteración:&nbsp;</strong>', [Descripcion de alteración ], '</div>'), "")>>
-  </div>
+    // CABECERA Y DATOS PACIENTE
+    if(getP('Titulo')) document.getElementById('p_titulo').innerText = getP('Titulo');
+    if(getP('Subtitulo')) document.getElementById('p_subtitulo').innerText = getP('Subtitulo');
+    if(getP('Tipo de informe')) document.getElementById('p_tipo_informe').innerText = getP('Tipo de informe');
 
-  <!-- RIÑÓN IZQUIERDO -->
-  <div class="organ-block">
-    <strong>Riñón Izquierdo:</strong>
-    tamaño y configuración regular <span class="checkbox-mark">(&nbsp;<<IF([Rinon Izquierdo]="Regular", "X", "")>>&nbsp;)</span>,
-    alterado <span class="checkbox-mark">(&nbsp;<<IF([Rinon Izquierdo]="Alterado", "X", "")>>&nbsp;)</span>,
-    medidas <span class="value-highlight"><<[Medidas:]>></span> mm.
-    Ecogenicidad hipo <span class="checkbox-mark">(&nbsp;<<IF([Ecogenicidad:]="hipo", "X", "")>>&nbsp;)</span>
-    iso <span class="checkbox-mark">(&nbsp;<<IF([Ecogenicidad:]="iso", "X", "")>>&nbsp;)</span>
-    hiper <span class="checkbox-mark">(&nbsp;<<IF([Ecogenicidad:]="hiper", "X", "")>>&nbsp;)</span>.
-    Parénquima normal <span class="checkbox-mark">(&nbsp;<<IF(IN("normal", SPLIT([Parenquima:], " , ")), "X", "")>>&nbsp;)</span>
-    alterada <span class="checkbox-mark">(&nbsp;<<IF(IN("alterada", SPLIT([Parenquima:], " , ")), "X", "")>>&nbsp;)</span>,
-    corteza <span class="checkbox-mark">(&nbsp;<<IF(IN("corteza", SPLIT([Parenquima:], " , ")), "X", "")>>&nbsp;)</span>,
-    no se evidencian alteraciones <span class="checkbox-mark">(&nbsp;<<IF(IN("no se evidencian alteraciones", SPLIT([Parenquima:], " , ")), "X", "")>>&nbsp;)</span>,
-    se evidencia LOE <span class="checkbox-mark">(&nbsp;<<IF([LOE.]="Sí", "X", "")>>&nbsp;)</span>
-    litiasis <span class="checkbox-mark">(&nbsp;<<IF([litiasis.]="Sí", "X", "")>>&nbsp;)</span>
-    dilatación pielocalicial grado <span class="checkbox-mark">(&nbsp;<<IF([dilatación pielocalicial grado.]="Sí", "X", "")>>&nbsp;)</span>.
-    <<IF(ISNOTEMPTY([Descripción de alteración:]), CONCATENATE('<div class="desc-box"><strong>Descripción de alteración:&nbsp;</strong>', [Descripción de alteración:], '</div>'), "")>>
-  </div>
+    document.getElementById('p_nombre').innerText = getP('Nombre y Apellido') || '-';
+    document.getElementById('p_cedula').innerText = getP('Cedula') || '-';
+    document.getElementById('p_edad_sexo').innerText = (getP('Edad') ? getP('Edad') + ' años' : '') + (getP('F / N') ? ' / ' + getP('F / N') : '');
+    document.getElementById('p_fecha').innerText = getP('Fecha') || '-';
+    document.getElementById('p_telefono').innerText = getP('Telefono') || '-';
+    document.getElementById('p_medico').innerText = getP('Medico tratante') || '-';
 
-  <!-- VEJIGA Y VOLÚMENES -->
-  <div class="organ-block">
-    <strong>Vejiga:</strong>
-    plenificada <span class="checkbox-mark">(&nbsp;<<IF([Vejiga]="Plenificada", "X", "")>>&nbsp;)</span>
-    poco plenificada <span class="checkbox-mark">(&nbsp;<<IF([Vejiga]="Poco plenificada", "X", "")>>&nbsp;)</span>,
-    pared <span class="value-highlight"><<[pared]>></span> mm,
-    sin alteraciones <span class="checkbox-mark">(&nbsp;<<IF([sin alteraciones]="Sí", "X", "")>>&nbsp;)</span>,
-    imagen de LOE en su interior <span class="checkbox-mark">(&nbsp;<<IF([imagen de LOE en su interior]="Sí", "X", "")>>&nbsp;)</span>
-    litiasis <span class="checkbox-mark">(&nbsp;<<IF([Litiasis:]="Sí", "X", "")>>&nbsp;)</span>.<br>
-    Vol. Premiccional: <span class="value-highlight"><<[Volumen Premiccional]>></span> cc &nbsp;&nbsp;|&nbsp;&nbsp;
-    Vol. Postmiccional: <span class="value-highlight"><<[Volumen Postmiccional]>></span> cc.
-  </div>
+    if(getP('Equipo Utilizado')) document.getElementById('p_equipo').innerText = getP('Equipo Utilizado');
 
-  <!-- PRÓSTATA -->
-  <div class="organ-block">
-    <strong>Próstata:</strong>
-    homogénea <span class="checkbox-mark">(&nbsp;<<IF([Prostata]="Homogénea", "X", "")>>&nbsp;)</span>
-    heterogénea <span class="checkbox-mark">(&nbsp;<<IF([Prostata]="Heterogénea", "X", "")>>&nbsp;)</span>,
-    contornos regulares <span class="checkbox-mark">(&nbsp;<<IF([Prostata]="Contornos regulares", "X", "")>>&nbsp;)</span>
-    irregulares <span class="checkbox-mark">(&nbsp;<<IF([Prostata]="Irregulares", "X", "")>>&nbsp;)</span>,
-    volumen: <span class="value-highlight"><<[volumen]>></span> cc,
-    IPP: <span class="value-highlight"><<[IPP]>></span> mm.
-  </div>
+    // RIÑÓN DERECHO
+    document.getElementById('rd_reg').innerHTML = checkX(getP('Rinon Derecho'), 'regular');
+    document.getElementById('rd_alt').innerHTML = checkX(getP('Rinon Derecho'), 'alterado');
+    document.getElementById('rd_med').innerText = getP('Medidas RD') || '____';
+    document.getElementById('rd_hipo').innerHTML = checkX(getP('Ecogenicidad RD'), 'hipo');
+    document.getElementById('rd_iso').innerHTML = checkX(getP('Ecogenicidad RD'), 'iso');
+    document.getElementById('rd_hiper').innerHTML = checkX(getP('Ecogenicidad RD'), 'hiper');
+    
+    document.getElementById('rd_par_norm').innerHTML = checkX(getP('Parenquima RD'), 'normal');
+    document.getElementById('rd_par_alt').innerHTML = checkX(getP('Parenquima RD'), 'alterada');
+    document.getElementById('rd_par_cort').innerHTML = checkX(getP('Parenquima RD'), 'corteza');
+    document.getElementById('rd_par_sin').innerHTML = checkX(getP('Parenquima RD'), 'no se evidencian');
+    
+    document.getElementById('rd_loe').innerHTML = checkX(getP('LOE RD'), 'sí');
+    document.getElementById('rd_lit').innerHTML = checkX(getP('Litiasis RD'), 'sí');
+    document.getElementById('rd_dil').innerHTML = checkX(getP('Dilatacion RD'), 'sí');
 
-  <!-- IMPRESIÓN DIAGNÓSTICA -->
-  <div class="diagnostic-container">
-    <div class="diagnostic-title">Impresión Diagnóstica</div>
-    <div class="diagnostic-content"><<[Impresion Diagnostica]>></div>
-  </div>
+    if (getP('Descripcion RD')) {
+      document.getElementById('rd_desc_box').style.display = 'block';
+      document.getElementById('rd_desc').innerText = getP('Descripcion RD');
+    }
 
-  <!-- PIE DE PÁGINA Y FIRMA -->
-  <div class="footer-container">
-    <div style="font-size: 8pt; color: #a0aec0;">
-      ID Informe: <<[InformeMedID]>>
-    </div>
-    <div class="doctor-signature">
-      <div class="signature-line"></div>
-      <div class="doctor-name">Dra. [Nombre del Médico]</div>
-      <div class="doctor-spec">Especialista / Ecografista</div>
-    </div>
-  </div>
-
-</body>
-</html>
-```
+    // RIÑÓN IZQUIERDO
+    document.getElementById('ri_reg').innerHTML = checkX(getP('Rinon Izquierdo'), 'regular');
+    document.getElementById('ri_alt').innerHTML = checkX(getP('Rinon Izquierdo'), 'alterado');
+    document.getElementById('ri_med').innerText = getP('Medidas RI') || '____';
+    document.getElementById('ri_hipo').innerHTML = checkX(getP('Ecogenicidad RI
