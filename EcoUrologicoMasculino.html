@@ -86,7 +86,6 @@
       max-width: 180px;
       object-fit: contain;
       margin-left: 15px;
-      display: none; /* Se muestra con JS solo si existe parámetro */
     }
 
     .clinic-title {
@@ -287,7 +286,7 @@
           <div class="clinic-title" id="p_titulo">CENTRO MÉDICO</div>
           <div class="clinic-subtitle" id="p_subtitulo">-</div>
         </div>
-        <img id="p_logo" class="clinic-logo" alt="Logo Centro Médico" />
+        <img id="p_logo" class="clinic-logo" src="https://lh3.googleusercontent.com/d/1h_-qvm4EX96JvPaT0Wjx-zAhxkkbvxkQ" alt="Logo Centro Médico" />
       </div>
 
       <!-- DATOS PACIENTE -->
@@ -465,12 +464,10 @@
       return (cleanVal === cleanExp || cleanVal.includes(cleanExp) || cleanVal === 'sí' || cleanVal === 'si' || cleanVal === 'true') ? 'X' : '&nbsp;&nbsp;';
     }
 
-    // LOGO DINÁMICO
-    let logoUrl = getP(['Logo', 'LogoUrl', 'Imagen']);
+    // LOGO DINÁMICO (si viene en la URL lo sobreescribe, de lo contrario mantiene el logo de Drive por defecto)
+    let logoUrl = getP(['Logo', 'LogoUrl', 'Imagen', 'Logopng']);
     if (logoUrl) {
-      const imgElem = document.getElementById('p_logo');
-      imgElem.src = logoUrl;
-      imgElem.style.display = 'block';
+      document.getElementById('p_logo').src = logoUrl;
     }
 
     // CARGA DE ENCABEZADO COMPLETO Y TELÉFONO SECUNDARIO
