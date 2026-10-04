@@ -95,7 +95,7 @@
       min-height: 14px;
     }
 
-    /* TÍTULO DEL INFORME (AHORA DEBAJO DE PACIENTE) */
+    /* TÍTULO DEL INFORME DEBAJO DE PACIENTE */
     .doc-title-container {
       text-align: center;
       margin: 8px 0 14px 0;
@@ -227,16 +227,13 @@
 
   <div class="page-sheet">
     <div>
-      <!-- 1. ENCABEZADO CENTRO MÉDICO -->
+      <!-- ENCABEZADO CENTRO MÉDICO DINÁMICO -->
       <div class="header-container">
-        <div class="clinic-title" id="p_titulo">MINI CENTRO LAS VEGAS</div>
-        <div class="clinic-subtitle" id="p_subtitulo">
-          Semisótano, entrada Urb. Palo Verde a 100 mts de la Redoma de Petare - Local Nº 9<br>
-          Telfs: 0212-2350327 / 0212-2379235
-        </div>
+        <div class="clinic-title" id="p_titulo">CENTRO MÉDICO</div>
+        <div class="clinic-subtitle" id="p_subtitulo">-</div>
       </div>
 
-      <!-- 2. DATOS PACIENTE -->
+      <!-- DATOS PACIENTE -->
       <div class="patient-card">
         <div class="patient-grid">
           <div class="data-item">
@@ -266,17 +263,17 @@
         </div>
       </div>
 
-      <!-- 3. TÍTULO DEL INFORME -->
+      <!-- TÍTULO DEL INFORME -->
       <div class="doc-title-container">
         <div class="doc-title" id="p_tipo_informe">Ecosonograma Urológico</div>
       </div>
 
-      <!-- 4. EQUIPO -->
+      <!-- EQUIPO -->
       <div class="equipment-box">
         Se realiza U.S. con equipo <strong id="p_equipo">EDAN DUS 3 con transductor convex de 3,5 MHz</strong> mediante cortes sagitales, coronales y axiales observándose:
       </div>
 
-      <!-- 5. RIÑÓN DERECHO -->
+      <!-- RIÑÓN DERECHO -->
       <div class="organ-block">
         <span class="organ-name">Riñón Derecho:</span> 
         tamaño y configuración regular (<span class="mark" id="rd_reg">&nbsp;&nbsp;</span>), 
@@ -297,7 +294,7 @@
         </div>
       </div>
 
-      <!-- 6. RIÑÓN IZQUIERDO -->
+      <!-- RIÑÓN IZQUIERDO -->
       <div class="organ-block">
         <span class="organ-name">Riñón Izquierdo:</span> 
         tamaño y configuración regular (<span class="mark" id="ri_reg">&nbsp;&nbsp;</span>), 
@@ -318,7 +315,7 @@
         </div>
       </div>
 
-      <!-- 7. VEJIGA Y VOLÚMENES -->
+      <!-- VEJIGA Y VOLÚMENES -->
       <div class="organ-block">
         <span class="organ-name">Vejiga:</span> 
         plenificada (<span class="mark" id="v_pleni">&nbsp;&nbsp;</span>) 
@@ -331,7 +328,7 @@
         Vol. Postmiccional: <span class="val" id="v_volpost">____</span> cc.
       </div>
 
-      <!-- 8. PRÓSTATA -->
+      <!-- PRÓSTATA -->
       <div class="organ-block">
         <span class="organ-name">Próstata:</span> 
         homogénea (<span class="mark" id="p_homo">&nbsp;&nbsp;</span>) 
@@ -342,14 +339,14 @@
         IPP: <span class="val" id="p_ipp">____</span> mm.
       </div>
 
-      <!-- 9. IMPRESIÓN DIAGNÓSTICA -->
+      <!-- IMPRESIÓN DIAGNÓSTICA -->
       <div class="diagnostic-container">
         <div class="diagnostic-title">Impresión Diagnóstica</div>
         <div class="diagnostic-content" id="p_idx">-</div>
       </div>
     </div>
 
-    <!-- 10. PIE DE PÁGINA Y FIRMA DEL MÉDICO -->
+    <!-- PIE DE PÁGINA Y FIRMA DEL MÉDICO -->
     <div class="footer-container">
       <div style="font-size: 8pt; color: #a0aec0;" id="p_contacto"></div>
       <div class="doctor-signature">
@@ -374,25 +371,21 @@
       return '';
     }
 
-    // TRANSFORMA FECHA DE MM/DD/YYYY O YYYY-MM-DD A DD/MM/YYYY
+    // FORMATEA CUALQUIER FECHA A DD/MM/YYYY
     function formatDate(dateStr) {
       if (!dateStr) return '-';
       let clean = dateStr.trim();
       
-      // Formato MM/DD/YYYY
       if (clean.includes('/')) {
         let parts = clean.split('/');
         if (parts.length === 3) {
-          // Si el año viene al principio (YYYY/MM/DD)
           if (parts[0].length === 4) {
             return `\({parts[2].padStart(2, '0')}/\){parts[1].padStart(2, '0')}/${parts[0]}`;
           }
-          // Si el año viene al final (MM/DD/YYYY)
           return `\({parts[1].padStart(2, '0')}/\){parts[0].padStart(2, '0')}/${parts[2]}`;
         }
       }
       
-      // Formato YYYY-MM-DD
       if (clean.includes('-')) {
         let parts = clean.split('-');
         if (parts.length === 3) {
@@ -401,7 +394,6 @@
           }
         }
       }
-      
       return clean;
     }
 
@@ -412,105 +404,11 @@
       return (cleanVal === cleanExp || cleanVal.includes(cleanExp) || cleanVal === 'sí' || cleanVal === 'si' || cleanVal === 'true') ? 'X' : '&nbsp;&nbsp;';
     }
 
-    // CABECERA Y DATOS PACIENTE
+    // ENCABEZADO CENTRO MÉDICO DINÁMICO
     if (getP('Titulo')) document.getElementById('p_titulo').innerText = getP('Titulo');
-    if (getP('Subtitulo')) document.getElementById('p_subtitulo').innerText = getP('Subtitulo');
-    if (getP('Tipo de informe')) document.getElementById('p_tipo_informe').innerText = getP('Tipo de informe');
-
-    document.getElementById('p_nombre').innerText = getP('Nombre y Apellido') || '-';
-    document.getElementById('p_cedula').innerText = getP('Cedula') || '-';
     
-    let edadVal = getP('Edad');
-    let sexoVal = getP('F / N') || getP('F/N') || getP('F / N ') || getP('Sexo');
-    document.getElementById('p_edad_sexo').innerText = (edadVal ? edadVal + ' años' : '') + (sexoVal ? ' / ' + sexoVal : '');
-    
-    document.getElementById('p_fecha').innerText = formatDate(getP('Fecha'));
-    document.getElementById('p_telefono').innerText = getP('Telefono') || '-';
-    document.getElementById('p_sexo').innerText = sexoVal || '-';
-
-    // EQUIPO LIMPIO (SIN TEXTO REPETIDO)
-    let equipoRaw = getP('Equipo Utilizado');
-    if (equipoRaw) {
-      document.getElementById('p_equipo').innerText = equipoRaw.replace(/^se realiza u\.s\. con equipo/i, '').trim();
-    }
-
-    // RIÑÓN DERECHO
-    document.getElementById('rd_reg').innerHTML = checkX(getP('Rinon Derecho'), 'regular');
-    document.getElementById('rd_alt').innerHTML = checkX(getP('Rinon Derecho'), 'alterado');
-    document.getElementById('rd_med').innerText = getP('Medidas RD') || getP('Medidas') || '____';
-    document.getElementById('rd_hipo').innerHTML = checkX(getP('Ecogenicidad RD') || getP('Ecogenicidad'), 'hipo');
-    document.getElementById('rd_iso').innerHTML = checkX(getP('Ecogenicidad RD') || getP('Ecogenicidad'), 'iso');
-    document.getElementById('rd_hiper').innerHTML = checkX(getP('Ecogenicidad RD') || getP('Ecogenicidad'), 'hiper');
-
-    let parRD = getP('Parenquima RD') || getP('Parenquima ');
-    document.getElementById('rd_par_norm').innerHTML = checkX(parRD, 'normal');
-    document.getElementById('rd_par_alt').innerHTML = checkX(parRD, 'alterada');
-    document.getElementById('rd_par_cort').innerHTML = checkX(parRD, 'corteza');
-    document.getElementById('rd_par_sin').innerHTML = checkX(parRD, 'no se evidencian');
-
-    document.getElementById('rd_loe').innerHTML = checkX(getP('LOE RD') || getP('LOE'), 'sí');
-    document.getElementById('rd_lit').innerHTML = checkX(getP('Litiasis RD') || getP('litiasis'), 'sí');
-    document.getElementById('rd_dil').innerHTML = checkX(getP('Dilatacion RD') || getP('dilatación pielocalicial grado '), 'sí');
-
-    let descRD = getP('Descripcion RD') || getP('Descripcion de alteración ');
-    if (descRD) {
-      document.getElementById('rd_desc_box').style.display = 'block';
-      document.getElementById('rd_desc').innerText = descRD;
-    }
-
-    // RIÑÓN IZQUIERDO
-    document.getElementById('ri_reg').innerHTML = checkX(getP('Rinon Izquierdo'), 'regular');
-    document.getElementById('ri_alt').innerHTML = checkX(getP('Rinon Izquierdo'), 'alterado');
-    document.getElementById('ri_med').innerText = getP('Medidas RI') || getP('Medidas:') || '____';
-    document.getElementById('ri_hipo').innerHTML = checkX(getP('Ecogenicidad RI') || getP('Ecogenicidad:'), 'hipo');
-    document.getElementById('ri_iso').innerHTML = checkX(getP('Ecogenicidad RI') || getP('Ecogenicidad:'), 'iso');
-    document.getElementById('ri_hiper').innerHTML = checkX(getP('Ecogenicidad RI') || getP('Ecogenicidad:'), 'hiper');
-
-    let parRI = getP('Parenquima RI') || getP('Parenquima:');
-    document.getElementById('ri_par_norm').innerHTML = checkX(parRI, 'normal');
-    document.getElementById('ri_par_alt').innerHTML = checkX(parRI, 'alterada');
-    document.getElementById('ri_par_cort').innerHTML = checkX(parRI, 'corteza');
-    document.getElementById('ri_par_sin').innerHTML = checkX(parRI, 'no se evidencian');
-
-    document.getElementById('ri_loe').innerHTML = checkX(getP('LOE RI') || getP('LOE.'), 'sí');
-    document.getElementById('ri_lit').innerHTML = checkX(getP('Litiasis RI') || getP('litiasis.'), 'sí');
-    document.getElementById('ri_dil').innerHTML = checkX(getP('Dilatacion RI') || getP('dilatación pielocalicial grado.'), 'sí');
-
-    let descRI = getP('Descripcion RI') || getP('Descripción de alteración:');
-    if (descRI) {
-      document.getElementById('ri_desc_box').style.display = 'block';
-      document.getElementById('ri_desc').innerText = descRI;
-    }
-
-    // VEJIGA
-    document.getElementById('v_pleni').innerHTML = checkX(getP('Vejiga'), 'plenificada');
-    document.getElementById('v_pocop').innerHTML = checkX(getP('Vejiga'), 'poco plenificada');
-    document.getElementById('v_pared').innerText = getP('Pared') || getP('pared') || '__';
-    document.getElementById('v_sinalt').innerHTML = checkX(getP('Sin Alteraciones') || getP('sin alteraciones'), 'sí');
-    document.getElementById('v_loe').innerHTML = checkX(getP('LOE Vejiga') || getP('imagen de LOE en su interior'), 'sí');
-    document.getElementById('v_lit').innerHTML = checkX(getP('Litiasis Vejiga') || getP('Litiasis:'), 'sí');
-    document.getElementById('v_volpre').innerText = getP('Volumen Premiccional') || '____';
-    document.getElementById('v_volpost').innerText = getP('Volumen Postmiccional') || '____';
-
-    // PRÓSTATA
-    document.getElementById('p_homo').innerHTML = checkX(getP('Prostata'), 'homogénea');
-    document.getElementById('p_hete').innerHTML = checkX(getP('Prostata'), 'heterogénea');
-    document.getElementById('p_creg').innerHTML = checkX(getP('Prostata'), 'contornos regulares');
-    document.getElementById('p_cirr').innerHTML = checkX(getP('Prostata'), 'irregulares');
-    document.getElementById('p_vol').innerText = getP('Volumen Prostata') || getP('volumen') || '____';
-    document.getElementById('p_ipp').innerText = getP('IPP') || '____';
-
-    // IMPRESIÓN DIAGNÓSTICA
-    document.getElementById('p_idx').innerText = getP('IDX Impresion Diagnostica') || getP('Impresion Diagnostica') || '-';
-
-    // FIRMA Y CONTACTO
-    if (getP('Medico tratante')) document.getElementById('p_firma_medico').innerText = getP('Medico tratante');
-    if (getP('Especialidad Medica')) document.getElementById('p_firma_esp').innerText = getP('Especialidad Medica');
-
-    let contactoStr = '';
-    if (getP('Direccion')) contactoStr += getP('Direccion') + '<br>';
-    if (getP('Numero de telefono principal')) contactoStr += 'Telf: ' + getP('Numero de telefono principal');
-    document.getElementById('p_contacto').innerHTML = contactoStr;
-  </script>
-</body>
-</html>
+    let dirHeader = getP('Direccion');
+    let telfHeader = getP('Numero de telefono principal') || getP('Telefono');
+    let subtituloStr = '';
+    if (dirHeader) subtituloStr += dirHeader;
+    if (telfHeader) subtituloStr += (subtituloStr ? '
