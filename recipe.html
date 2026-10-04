@@ -122,7 +122,7 @@
         /* MARCA DE AGUA CENTRADA EN CADA COLUMNA */
         .watermark-container {
             position: absolute;
-            top: 52%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 75%;
@@ -178,12 +178,12 @@
 
         .value {
             color: #0f172a;
-            border-bottom: 1px solid #94a3b8;
+            border-bottom: 1px solid #1a365d;
             font-weight: 600;
             padding-left: 4px;
         }
 
-        /* SIMBOLO RX Y TITULOS SECCION */
+        /* SÍMBOLO RX Y TÍTULOS DE SECCIÓN */
         .rx-symbol {
             font-size: 18pt;
             font-weight: 900;
@@ -206,66 +206,103 @@
             font-size: 9.5pt;
             line-height: 1.5;
             color: #1e293b;
-            min-height: 80mm;
+            min-height: 72mm;
             white-space: pre-wrap;
             word-wrap: break-word;
             position: relative;
             z-index: 3;
         }
 
-        /* PIE DE PÁGINA (FIRMA, SELLO Y CONTACTO) */
+        /* PIE DE PÁGINA (FIRMA, SELLO Y QR DEBAJO) */
         .footer-container {
             position: absolute;
-            bottom: 6mm;
+            bottom: 5mm;
             left: 12mm;
             right: 12mm;
             z-index: 3;
         }
 
-        .footer-table {
-            width: 100%;
-            border-collapse: collapse;
+        .footer-flex-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
         }
 
-        .footer-table td {
-            vertical-align: bottom;
+        .signature-block {
+            flex: 1;
+            padding-right: 15px;
+            padding-top: 15px;
         }
 
-        .signature-cell {
-            width: 55%;
-            font-size: 8pt;
-            color: #1a365d;
+        .signature-line-wrapper {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .signature-label {
+            font-size: 8.5pt;
             font-weight: 700;
+            color: #1a365d;
+            white-space: nowrap;
         }
 
-        .seal-box {
-            width: 65px;
-            height: 45px;
-            border: 1px solid #1a365d;
-            display: inline-block;
-            text-align: center;
-            line-height: 45px;
-            font-size: 7pt;
-            color: #94a3b8;
+        .signature-line {
+            flex: 1;
+            border-bottom: 1.5px solid #1a365d;
+            height: 1px;
+        }
+
+        .doctor-title-under {
+            font-size: 8pt;
+            font-weight: 700;
+            color: #1a365d;
+            margin-top: 5px;
+            padding-left: 80px;
+        }
+
+        .seal-qr-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 140px;
+        }
+
+        .seal-header-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .seal-box-large {
+            width: 100px;
+            height: 55px;
+            border: 1.5px solid #1a365d;
             background: #ffffff;
+            border-radius: 2px;
         }
 
-        .qr-cell {
-            width: 45%;
-            text-align: right;
+        .qr-wrapper {
+            margin-top: 6px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .qr-img {
-            width: 45px;
-            height: 45px;
-            object-fit: contain;
+        .qr-svg-box {
+            width: 65px;
+            height: 65px;
+            display: block;
         }
 
-        .contact-info {
-            font-size: 7pt;
-            color: #475569;
+        .qr-phone-number {
+            font-size: 7.5pt;
+            font-weight: 700;
+            color: #1a365d;
             margin-top: 2px;
-            line-height: 1.2;
+            letter-spacing: 0.3px;
         }
 
         /* REGLAS DE IMPRESIÓN */
@@ -336,23 +373,46 @@
 
                 <!-- PIE DE PÁGINA -->
                 <div class="footer-container">
-                    <table class="footer-table">
-                        <tr>
-                            <td class="signature-cell">
-                                Firma Médico: <span style="display:inline-block; width: 110px; border-bottom: 1px solid #1a365d;"></span>
-                                &nbsp; Sello: <div class="seal-box">SELLO</div>
-                            </td>
-                            <td class="qr-cell">
-                                <!-- QR O DATOS DE CONTACTO DE LA CAPTURA -->
-                                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 6px;">
-                                    <div class="contact-info" style="text-align: right;">
-                                        <strong id="param-tel1-1">0412 - 309.96.22</strong><br>
-                                        <span id="param-foot-titulo-1">Dra. Moisella Kanahan</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="footer-flex-row">
+                        <!-- FIRMA Y TÍTULO -->
+                        <div class="signature-block">
+                            <div class="signature-line-wrapper">
+                                <span class="signature-label">Firma Médico:</span>
+                                <div class="signature-line"></div>
+                            </div>
+                            <div class="doctor-title-under" id="param-foot-titulo-1">CLÍNICA LAS VEGAS</div>
+                        </div>
+
+                        <!-- SELLO Y QR DEBAJO -->
+                        <div class="seal-qr-block">
+                            <div class="seal-header-wrapper">
+                                <span class="signature-label">Sello:</span>
+                                <div class="seal-box-large"></div>
+                            </div>
+                            <div class="qr-wrapper">
+                                <!-- VECTOR QR EXACTO CON WHATSAPP -->
+                                <svg class="qr-svg-box" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0,0 h100 v100 h-100 z" fill="#ffffff"/>
+                                    <!-- Módulos de Esquina del QR -->
+                                    <path d="M5,5 h28 v28 h-28 z M11,11 h16 v16 h-16 z M17,17 h4 v4 h-4 z" fill="#1a365d" fill-rule="evenodd"/>
+                                    <path d="M67,5 h28 v28 h-28 z M73,11 h16 v16 h-16 z M79,17 h4 v4 h-4 z" fill="#1a365d" fill-rule="evenodd"/>
+                                    <path d="M5,67 h28 v28 h-28 z M11,73 h16 v16 h-16 z M17,79 h4 v4 h-4 z" fill="#1a365d" fill-rule="evenodd"/>
+                                    
+                                    <!-- Patrón de Datos QR -->
+                                    <path d="M38,5 h5 v5 h-5 z M48,5 h10 v5 h-10 z M38,15 h5 v10 h-5 z M48,15 h5 v5 h-5 z M58,10 h5 v10 h-5 z M38,28 h15 v5 h-15 z M58,25 h8 v8 h-8 z M5,38 h10 v5 h-10 z M20,38 h10 v5 h-10 z M38,38 h8 v8 h-8 z M52,38 h10 v5 h-10 z M68,38 h8 v8 h-8 z M82,38 h12 v5 h-12 z M10,48 h5 v10 h-5 z M25,48 h8 v8 h-8 z M78,48 h10 v5 h-10 z M5,60 h10 v5 h-10 z M82,58 h12 v5 h-12 z M38,68 h10 v5 h-10 z M52,68 h8 v8 h-8 z M68,68 h10 v5 h-10 z M82,68 h10 v5 h-10 z M38,82 h10 v5 h-10 z M52,78 h8 v8 h-8 z M68,82 h8 v8 h-8 z M82,82 h12 v12 h-12 z" fill="#1a365d"/>
+                                    
+                                    <!-- Círculo Central Blanco -->
+                                    <circle cx="50" cy="50" r="14" fill="#ffffff"/>
+                                    <!-- Círculo Verde WhatsApp -->
+                                    <circle cx="50" cy="50" r="11" fill="#25D366"/>
+                                    <!-- Icono WhatsApp -->
+                                    <path d="M45.5,53.8 L45.9,53.9 C47.1,54.6 48.5,54.8 49.8,54.4 C51.2,54.1 52.4,53.2 53.2,52.0 C54.0,50.8 54.2,49.4 53.9,48.0 C53.6,46.6 52.7,45.5 51.5,44.8 C50.3,44.1 48.9,43.9 47.5,44.2 C46.1,44.5 44.9,45.4 44.1,46.6 C43.7,47.2 43.5,48.0 43.5,48.7 L43.5,49.1 L42.5,52.5 L45.5,53.8 Z" fill="#ffffff"/>
+                                    <path d="M48.2,46.2 C48.4,46.2 48.6,46.2 48.7,46.5 C48.9,46.8 49.3,47.8 49.4,48.0 C49.5,48.1 49.5,48.3 49.4,48.4 C49.3,48.6 49.2,48.7 49.1,48.8 C49.0,48.9 48.8,49.1 48.7,49.2 C48.6,49.3 48.4,49.4 48.6,49.7 C48.8,50.0 49.4,51.0 50.3,51.8 C51.4,52.8 52.3,53.1 52.6,53.2 C52.9,53.3 53.0,53.3 53.2,53.1 C53.3,52.9 53.7,52.4 53.8,52.2 C54.0,52.0 54.1,52.0 54.3,52.1 C54.5,52.2 55.6,52.7 55.8,52.8 C56.0,52.9 56.1,53.0 56.2,53.1 C56.2,53.3 56.2,54.0 55.8,54.4" stroke="#ffffff" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+                                </svg>
+                                <div class="qr-phone-number" id="param-tel1-1">0412 - 309.96.22</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -390,27 +450,51 @@
                 </table>
 
                 <!-- TÍTULO INDICACIONES Y CONTENIDO -->
-                <div class="section-title">Indicaciones:</div>
+                <div class="section-title">INDICACIONES:</div>
                 <div class="content-body" id="param-indicaciones">-</div>
 
                 <!-- PIE DE PÁGINA -->
                 <div class="footer-container">
-                    <table class="footer-table">
-                        <tr>
-                            <td class="signature-cell">
-                                Firma Médico: <span style="display:inline-block; width: 110px; border-bottom: 1px solid #1a365d;"></span>
-                                &nbsp; Sello: <div class="seal-box">SELLO</div>
-                            </td>
-                            <td class="qr-cell">
-                                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 6px;">
-                                    <div class="contact-info" style="text-align: right;">
-                                        <strong id="param-tel1-2">0412 - 309.96.22</strong><br>
-                                        <span id="param-foot-titulo-2">Dra. Moisella Kanahan</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="footer-flex-row">
+                        <!-- FIRMA Y TÍTULO -->
+                        <div class="signature-block">
+                            <div class="signature-line-wrapper">
+                                <span class="signature-label">Firma Médico:</span>
+                                <div class="signature-line"></div>
+                            </div>
+                            <div class="doctor-title-under" id="param-foot-titulo-2">CLÍNICA LAS VEGAS</div>
+                        </div>
+
+                        <!-- SELLO Y QR DEBAJO -->
+                        <div class="seal-qr-block">
+                            <div class="seal-header-wrapper">
+                                <span class="signature-label">Sello:</span>
+                                <div class="seal-box-large"></div>
+                            </div>
+                            <div class="qr-wrapper">
+                                <!-- VECTOR QR EXACTO CON WHATSAPP -->
+                                <svg class="qr-svg-box" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0,0 h100 v100 h-100 z" fill="#ffffff"/>
+                                    <!-- Módulos de Esquina del QR -->
+                                    <path d="M5,5 h28 v28 h-28 z M11,11 h16 v16 h-16 z M17,17 h4 v4 h-4 z" fill="#1a365d" fill-rule="evenodd"/>
+                                    <path d="M67,5 h28 v28 h-28 z M73,11 h16 v16 h-16 z M79,17 h4 v4 h-4 z" fill="#1a365d" fill-rule="evenodd"/>
+                                    <path d="M5,67 h28 v28 h-28 z M11,73 h16 v16 h-16 z M17,79 h4 v4 h-4 z" fill="#1a365d" fill-rule="evenodd"/>
+                                    
+                                    <!-- Patrón de Datos QR -->
+                                    <path d="M38,5 h5 v5 h-5 z M48,5 h10 v5 h-10 z M38,15 h5 v10 h-5 z M48,15 h5 v5 h-5 z M58,10 h5 v10 h-5 z M38,28 h15 v5 h-15 z M58,25 h8 v8 h-8 z M5,38 h10 v5 h-10 z M20,38 h10 v5 h-10 z M38,38 h8 v8 h-8 z M52,38 h10 v5 h-10 z M68,38 h8 v8 h-8 z M82,38 h12 v5 h-12 z M10,48 h5 v10 h-5 z M25,48 h8 v8 h-8 z M78,48 h10 v5 h-10 z M5,60 h10 v5 h-10 z M82,58 h12 v5 h-12 z M38,68 h10 v5 h-10 z M52,68 h8 v8 h-8 z M68,68 h10 v5 h-10 z M82,68 h10 v5 h-10 z M38,82 h10 v5 h-10 z M52,78 h8 v8 h-8 z M68,82 h8 v8 h-8 z M82,82 h12 v12 h-12 z" fill="#1a365d"/>
+                                    
+                                    <!-- Círculo Central Blanco -->
+                                    <circle cx="50" cy="50" r="14" fill="#ffffff"/>
+                                    <!-- Círculo Verde WhatsApp -->
+                                    <circle cx="50" cy="50" r="11" fill="#25D366"/>
+                                    <!-- Icono WhatsApp -->
+                                    <path d="M45.5,53.8 L45.9,53.9 C47.1,54.6 48.5,54.8 49.8,54.4 C51.2,54.1 52.4,53.2 53.2,52.0 C54.0,50.8 54.2,49.4 53.9,48.0 C53.6,46.6 52.7,45.5 51.5,44.8 C50.3,44.1 48.9,43.9 47.5,44.2 C46.1,44.5 44.9,45.4 44.1,46.6 C43.7,47.2 43.5,48.0 43.5,48.7 L43.5,49.1 L42.5,52.5 L45.5,53.8 Z" fill="#ffffff"/>
+                                    <path d="M48.2,46.2 C48.4,46.2 48.6,46.2 48.7,46.5 C48.9,46.8 49.3,47.8 49.4,48.0 C49.5,48.1 49.5,48.3 49.4,48.4 C49.3,48.6 49.2,48.7 49.1,48.8 C49.0,48.9 48.8,49.1 48.7,49.2 C48.6,49.3 48.4,49.4 48.6,49.7 C48.8,50.0 49.4,51.0 50.3,51.8 C51.4,52.8 52.3,53.1 52.6,53.2 C52.9,53.3 53.0,53.3 53.2,53.1 C53.3,52.9 53.7,52.4 53.8,52.2 C54.0,52.0 54.1,52.0 54.3,52.1 C54.5,52.2 55.6,52.7 55.8,52.8 C56.0,52.9 56.1,53.0 56.2,53.1 C56.2,53.3 56.2,54.0 55.8,54.4" stroke="#ffffff" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+                                </svg>
+                                <div class="qr-phone-number" id="param-tel1-2">0412 - 309.96.22</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -480,7 +564,7 @@
             setText('param-diag-1', diagnostico);
             setText('param-diag-2', diagnostico);
 
-            // Pie
+            // Pie de página (Título del centro médico / Teléfono)
             if (tel1) {
                 setText('param-tel1-1', tel1);
                 setText('param-tel1-2', tel1);
