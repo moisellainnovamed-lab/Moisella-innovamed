@@ -38,11 +38,11 @@
       position: relative;
     }
 
-    /* ENCABEZADO */
+    /* ENCABEZADO CENTRO MÉDICO */
     .header-container {
       border-bottom: 2pt solid #1a365d;
       padding-bottom: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .clinic-title {
@@ -61,22 +61,6 @@
       line-height: 1.25;
     }
 
-    .doc-title-container {
-      text-align: center;
-      margin: 8px 0 12px 0;
-    }
-
-    .doc-title {
-      font-size: 13pt;
-      font-weight: 700;
-      color: #1a365d;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border-bottom: 1px solid #cbd5e0;
-      display: inline-block;
-      padding-bottom: 2px;
-    }
-
     /* FICHA PACIENTE */
     .patient-card {
       background-color: #f7fafc;
@@ -88,7 +72,7 @@
 
     .patient-grid {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-columns: 2fr 1.2fr 1fr;
       gap: 6px 12px;
     }
 
@@ -111,11 +95,28 @@
       min-height: 14px;
     }
 
+    /* TÍTULO DEL INFORME (AHORA DEBAJO DE PACIENTE) */
+    .doc-title-container {
+      text-align: center;
+      margin: 8px 0 14px 0;
+    }
+
+    .doc-title {
+      font-size: 13pt;
+      font-weight: 700;
+      color: #1a365d;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #cbd5e0;
+      display: inline-block;
+      padding-bottom: 2px;
+    }
+
     /* EQUIPO UTILIZADO */
     .equipment-box {
       font-size: 9pt;
       margin-bottom: 12px;
-      padding: 5px 8px;
+      padding: 6px 10px;
       background-color: #edf2f7;
       border-left: 3px solid #3182ce;
       color: #2d3748;
@@ -226,7 +227,7 @@
 
   <div class="page-sheet">
     <div>
-      <!-- ENCABEZADO CENTRO MÉDICO -->
+      <!-- 1. ENCABEZADO CENTRO MÉDICO -->
       <div class="header-container">
         <div class="clinic-title" id="p_titulo">MINI CENTRO LAS VEGAS</div>
         <div class="clinic-subtitle" id="p_subtitulo">
@@ -235,12 +236,7 @@
         </div>
       </div>
 
-      <!-- TÍTULO INFORME -->
-      <div class="doc-title-container">
-        <div class="doc-title" id="p_tipo_informe">Ecosonograma Urológico</div>
-      </div>
-
-      <!-- DATOS PACIENTE Y MÉDICO -->
+      <!-- 2. DATOS PACIENTE -->
       <div class="patient-card">
         <div class="patient-grid">
           <div class="data-item">
@@ -256,7 +252,7 @@
             <span class="data-value" id="p_edad_sexo">-</span>
           </div>
           <div class="data-item">
-            <span class="data-label">Fecha</span>
+            <span class="data-label">Fecha de Consulta</span>
             <span class="data-value" id="p_fecha">-</span>
           </div>
           <div class="data-item">
@@ -264,18 +260,23 @@
             <span class="data-value" id="p_telefono">-</span>
           </div>
           <div class="data-item">
-            <span class="data-label">Médico Tratante</span>
-            <span class="data-value" id="p_medico">-</span>
+            <span class="data-label">Sexo</span>
+            <span class="data-value" id="p_sexo">-</span>
           </div>
         </div>
       </div>
 
-      <!-- EQUIPO -->
+      <!-- 3. TÍTULO DEL INFORME -->
+      <div class="doc-title-container">
+        <div class="doc-title" id="p_tipo_informe">Ecosonograma Urológico</div>
+      </div>
+
+      <!-- 4. EQUIPO -->
       <div class="equipment-box">
         Se realiza U.S. con equipo <strong id="p_equipo">EDAN DUS 3 con transductor convex de 3,5 MHz</strong> mediante cortes sagitales, coronales y axiales observándose:
       </div>
 
-      <!-- RIÑÓN DERECHO -->
+      <!-- 5. RIÑÓN DERECHO -->
       <div class="organ-block">
         <span class="organ-name">Riñón Derecho:</span> 
         tamaño y configuración regular (<span class="mark" id="rd_reg">&nbsp;&nbsp;</span>), 
@@ -296,7 +297,7 @@
         </div>
       </div>
 
-      <!-- RIÑÓN IZQUIERDO -->
+      <!-- 6. RIÑÓN IZQUIERDO -->
       <div class="organ-block">
         <span class="organ-name">Riñón Izquierdo:</span> 
         tamaño y configuración regular (<span class="mark" id="ri_reg">&nbsp;&nbsp;</span>), 
@@ -317,7 +318,7 @@
         </div>
       </div>
 
-      <!-- VEJIGA Y VOLÚMENES -->
+      <!-- 7. VEJIGA Y VOLÚMENES -->
       <div class="organ-block">
         <span class="organ-name">Vejiga:</span> 
         plenificada (<span class="mark" id="v_pleni">&nbsp;&nbsp;</span>) 
@@ -330,7 +331,7 @@
         Vol. Postmiccional: <span class="val" id="v_volpost">____</span> cc.
       </div>
 
-      <!-- PRÓSTATA -->
+      <!-- 8. PRÓSTATA -->
       <div class="organ-block">
         <span class="organ-name">Próstata:</span> 
         homogénea (<span class="mark" id="p_homo">&nbsp;&nbsp;</span>) 
@@ -341,14 +342,14 @@
         IPP: <span class="val" id="p_ipp">____</span> mm.
       </div>
 
-      <!-- IMPRESIÓN DIAGNÓSTICA -->
+      <!-- 9. IMPRESIÓN DIAGNÓSTICA -->
       <div class="diagnostic-container">
         <div class="diagnostic-title">Impresión Diagnóstica</div>
         <div class="diagnostic-content" id="p_idx">-</div>
       </div>
     </div>
 
-    <!-- PIE DE PÁGINA -->
+    <!-- 10. PIE DE PÁGINA Y FIRMA DEL MÉDICO -->
     <div class="footer-container">
       <div style="font-size: 8pt; color: #a0aec0;" id="p_contacto"></div>
       <div class="doctor-signature">
@@ -360,11 +361,9 @@
   </div>
 
   <script>
-    // LECTURA ROBUSTA DE PARÁMETROS URL
     const params = new URLSearchParams(window.location.search);
 
     function getP(key) {
-      // Busca la clave directa, reemplazando '+' por espacios o variantes
       for (let [paramKey, val] of params.entries()) {
         let cleanKey = decodeURIComponent(paramKey).replace(/\+/g, ' ').trim().toLowerCase();
         let targetKey = key.trim().toLowerCase();
@@ -373,6 +372,37 @@
         }
       }
       return '';
+    }
+
+    // TRANSFORMA FECHA DE MM/DD/YYYY O YYYY-MM-DD A DD/MM/YYYY
+    function formatDate(dateStr) {
+      if (!dateStr) return '-';
+      let clean = dateStr.trim();
+      
+      // Formato MM/DD/YYYY
+      if (clean.includes('/')) {
+        let parts = clean.split('/');
+        if (parts.length === 3) {
+          // Si el año viene al principio (YYYY/MM/DD)
+          if (parts[0].length === 4) {
+            return `\({parts[2].padStart(2, '0')}/\){parts[1].padStart(2, '0')}/${parts[0]}`;
+          }
+          // Si el año viene al final (MM/DD/YYYY)
+          return `\({parts[1].padStart(2, '0')}/\){parts[0].padStart(2, '0')}/${parts[2]}`;
+        }
+      }
+      
+      // Formato YYYY-MM-DD
+      if (clean.includes('-')) {
+        let parts = clean.split('-');
+        if (parts.length === 3) {
+          if (parts[0].length === 4) {
+            return `\({parts[2].padStart(2, '0')}/\){parts[1].padStart(2, '0')}/${parts[0]}`;
+          }
+        }
+      }
+      
+      return clean;
     }
 
     function checkX(val, expected) {
@@ -391,14 +421,18 @@
     document.getElementById('p_cedula').innerText = getP('Cedula') || '-';
     
     let edadVal = getP('Edad');
-    let fnVal = getP('F / N') || getP('F/N') || getP('F / N ');
-    document.getElementById('p_edad_sexo').innerText = (edadVal ? edadVal + ' años' : '') + (fnVal ? ' / ' + fnVal : '');
+    let sexoVal = getP('F / N') || getP('F/N') || getP('F / N ') || getP('Sexo');
+    document.getElementById('p_edad_sexo').innerText = (edadVal ? edadVal + ' años' : '') + (sexoVal ? ' / ' + sexoVal : '');
     
-    document.getElementById('p_fecha').innerText = getP('Fecha') || '-';
+    document.getElementById('p_fecha').innerText = formatDate(getP('Fecha'));
     document.getElementById('p_telefono').innerText = getP('Telefono') || '-';
-    document.getElementById('p_medico').innerText = getP('Medico tratante') || '-';
+    document.getElementById('p_sexo').innerText = sexoVal || '-';
 
-    if (getP('Equipo Utilizado')) document.getElementById('p_equipo').innerText = getP('Equipo Utilizado');
+    // EQUIPO LIMPIO (SIN TEXTO REPETIDO)
+    let equipoRaw = getP('Equipo Utilizado');
+    if (equipoRaw) {
+      document.getElementById('p_equipo').innerText = equipoRaw.replace(/^se realiza u\.s\. con equipo/i, '').trim();
+    }
 
     // RIÑÓN DERECHO
     document.getElementById('rd_reg').innerHTML = checkX(getP('Rinon Derecho'), 'regular');
