@@ -208,7 +208,6 @@
       color: #718096;
     }
 
-    /* OCULTAR ELEMENTOS AL IMPRIMIR */
     @media print {
       body {
         background-color: #ffffff;
@@ -351,9 +350,7 @@
 
     <!-- PIE DE PÁGINA -->
     <div class="footer-container">
-      <div style="font-size: 8pt; color: #a0aec0;" id="p_contacto">
-        <!-- Contactos -->
-      </div>
+      <div style="font-size: 8pt; color: #a0aec0;" id="p_contacto"></div>
       <div class="doctor-signature">
         <div class="signature-line"></div>
         <div class="doctor-name" id="p_firma_medico">Dra. Medico Tratante</div>
@@ -363,11 +360,19 @@
   </div>
 
   <script>
-    // LECTURA DE PARÁMETROS URL DE APPSHEET
-    const urlParams = new URLSearchParams(window.location.search);
+    // LECTURA ROBUSTA DE PARÁMETROS URL
+    const params = new URLSearchParams(window.location.search);
 
-    function getP(param) {
-      return urlParams.get(param) || '';
+    function getP(key) {
+      // Busca la clave directa, reemplazando '+' por espacios o variantes
+      for (let [paramKey, val] of params.entries()) {
+        let cleanKey = decodeURIComponent(paramKey).replace(/\+/g, ' ').trim().toLowerCase();
+        let targetKey = key.trim().toLowerCase();
+        if (cleanKey === targetKey) {
+          return decodeURIComponent(val).replace(/\+/g, ' ').trim();
+        }
+      }
+      return '';
     }
 
     function checkX(val, expected) {
@@ -378,43 +383,100 @@
     }
 
     // CABECERA Y DATOS PACIENTE
-    if(getP('Titulo')) document.getElementById('p_titulo').innerText = getP('Titulo');
-    if(getP('Subtitulo')) document.getElementById('p_subtitulo').innerText = getP('Subtitulo');
-    if(getP('Tipo de informe')) document.getElementById('p_tipo_informe').innerText = getP('Tipo de informe');
+    if (getP('Titulo')) document.getElementById('p_titulo').innerText = getP('Titulo');
+    if (getP('Subtitulo')) document.getElementById('p_subtitulo').innerText = getP('Subtitulo');
+    if (getP('Tipo de informe')) document.getElementById('p_tipo_informe').innerText = getP('Tipo de informe');
 
     document.getElementById('p_nombre').innerText = getP('Nombre y Apellido') || '-';
     document.getElementById('p_cedula').innerText = getP('Cedula') || '-';
-    document.getElementById('p_edad_sexo').innerText = (getP('Edad') ? getP('Edad') + ' años' : '') + (getP('F / N') ? ' / ' + getP('F / N') : '');
+    
+    let edadVal = getP('Edad');
+    let fnVal = getP('F / N') || getP('F/N') || getP('F / N ');
+    document.getElementById('p_edad_sexo').innerText = (edadVal ? edadVal + ' años' : '') + (fnVal ? ' / ' + fnVal : '');
+    
     document.getElementById('p_fecha').innerText = getP('Fecha') || '-';
     document.getElementById('p_telefono').innerText = getP('Telefono') || '-';
     document.getElementById('p_medico').innerText = getP('Medico tratante') || '-';
 
-    if(getP('Equipo Utilizado')) document.getElementById('p_equipo').innerText = getP('Equipo Utilizado');
+    if (getP('Equipo Utilizado')) document.getElementById('p_equipo').innerText = getP('Equipo Utilizado');
 
     // RIÑÓN DERECHO
     document.getElementById('rd_reg').innerHTML = checkX(getP('Rinon Derecho'), 'regular');
     document.getElementById('rd_alt').innerHTML = checkX(getP('Rinon Derecho'), 'alterado');
-    document.getElementById('rd_med').innerText = getP('Medidas RD') || '____';
-    document.getElementById('rd_hipo').innerHTML = checkX(getP('Ecogenicidad RD'), 'hipo');
-    document.getElementById('rd_iso').innerHTML = checkX(getP('Ecogenicidad RD'), 'iso');
-    document.getElementById('rd_hiper').innerHTML = checkX(getP('Ecogenicidad RD'), 'hiper');
-    
-    document.getElementById('rd_par_norm').innerHTML = checkX(getP('Parenquima RD'), 'normal');
-    document.getElementById('rd_par_alt').innerHTML = checkX(getP('Parenquima RD'), 'alterada');
-    document.getElementById('rd_par_cort').innerHTML = checkX(getP('Parenquima RD'), 'corteza');
-    document.getElementById('rd_par_sin').innerHTML = checkX(getP('Parenquima RD'), 'no se evidencian');
-    
-    document.getElementById('rd_loe').innerHTML = checkX(getP('LOE RD'), 'sí');
-    document.getElementById('rd_lit').innerHTML = checkX(getP('Litiasis RD'), 'sí');
-    document.getElementById('rd_dil').innerHTML = checkX(getP('Dilatacion RD'), 'sí');
+    document.getElementById('rd_med').innerText = getP('Medidas RD') || getP('Medidas') || '____';
+    document.getElementById('rd_hipo').innerHTML = checkX(getP('Ecogenicidad RD') || getP('Ecogenicidad'), 'hipo');
+    document.getElementById('rd_iso').innerHTML = checkX(getP('Ecogenicidad RD') || getP('Ecogenicidad'), 'iso');
+    document.getElementById('rd_hiper').innerHTML = checkX(getP('Ecogenicidad RD') || getP('Ecogenicidad'), 'hiper');
 
-    if (getP('Descripcion RD')) {
+    let parRD = getP('Parenquima RD') || getP('Parenquima ');
+    document.getElementById('rd_par_norm').innerHTML = checkX(parRD, 'normal');
+    document.getElementById('rd_par_alt').innerHTML = checkX(parRD, 'alterada');
+    document.getElementById('rd_par_cort').innerHTML = checkX(parRD, 'corteza');
+    document.getElementById('rd_par_sin').innerHTML = checkX(parRD, 'no se evidencian');
+
+    document.getElementById('rd_loe').innerHTML = checkX(getP('LOE RD') || getP('LOE'), 'sí');
+    document.getElementById('rd_lit').innerHTML = checkX(getP('Litiasis RD') || getP('litiasis'), 'sí');
+    document.getElementById('rd_dil').innerHTML = checkX(getP('Dilatacion RD') || getP('dilatación pielocalicial grado '), 'sí');
+
+    let descRD = getP('Descripcion RD') || getP('Descripcion de alteración ');
+    if (descRD) {
       document.getElementById('rd_desc_box').style.display = 'block';
-      document.getElementById('rd_desc').innerText = getP('Descripcion RD');
+      document.getElementById('rd_desc').innerText = descRD;
     }
 
     // RIÑÓN IZQUIERDO
     document.getElementById('ri_reg').innerHTML = checkX(getP('Rinon Izquierdo'), 'regular');
     document.getElementById('ri_alt').innerHTML = checkX(getP('Rinon Izquierdo'), 'alterado');
-    document.getElementById('ri_med').innerText = getP('Medidas RI') || '____';
-    document.getElementById('ri_hipo').innerHTML = checkX(getP('Ecogenicidad RI
+    document.getElementById('ri_med').innerText = getP('Medidas RI') || getP('Medidas:') || '____';
+    document.getElementById('ri_hipo').innerHTML = checkX(getP('Ecogenicidad RI') || getP('Ecogenicidad:'), 'hipo');
+    document.getElementById('ri_iso').innerHTML = checkX(getP('Ecogenicidad RI') || getP('Ecogenicidad:'), 'iso');
+    document.getElementById('ri_hiper').innerHTML = checkX(getP('Ecogenicidad RI') || getP('Ecogenicidad:'), 'hiper');
+
+    let parRI = getP('Parenquima RI') || getP('Parenquima:');
+    document.getElementById('ri_par_norm').innerHTML = checkX(parRI, 'normal');
+    document.getElementById('ri_par_alt').innerHTML = checkX(parRI, 'alterada');
+    document.getElementById('ri_par_cort').innerHTML = checkX(parRI, 'corteza');
+    document.getElementById('ri_par_sin').innerHTML = checkX(parRI, 'no se evidencian');
+
+    document.getElementById('ri_loe').innerHTML = checkX(getP('LOE RI') || getP('LOE.'), 'sí');
+    document.getElementById('ri_lit').innerHTML = checkX(getP('Litiasis RI') || getP('litiasis.'), 'sí');
+    document.getElementById('ri_dil').innerHTML = checkX(getP('Dilatacion RI') || getP('dilatación pielocalicial grado.'), 'sí');
+
+    let descRI = getP('Descripcion RI') || getP('Descripción de alteración:');
+    if (descRI) {
+      document.getElementById('ri_desc_box').style.display = 'block';
+      document.getElementById('ri_desc').innerText = descRI;
+    }
+
+    // VEJIGA
+    document.getElementById('v_pleni').innerHTML = checkX(getP('Vejiga'), 'plenificada');
+    document.getElementById('v_pocop').innerHTML = checkX(getP('Vejiga'), 'poco plenificada');
+    document.getElementById('v_pared').innerText = getP('Pared') || getP('pared') || '__';
+    document.getElementById('v_sinalt').innerHTML = checkX(getP('Sin Alteraciones') || getP('sin alteraciones'), 'sí');
+    document.getElementById('v_loe').innerHTML = checkX(getP('LOE Vejiga') || getP('imagen de LOE en su interior'), 'sí');
+    document.getElementById('v_lit').innerHTML = checkX(getP('Litiasis Vejiga') || getP('Litiasis:'), 'sí');
+    document.getElementById('v_volpre').innerText = getP('Volumen Premiccional') || '____';
+    document.getElementById('v_volpost').innerText = getP('Volumen Postmiccional') || '____';
+
+    // PRÓSTATA
+    document.getElementById('p_homo').innerHTML = checkX(getP('Prostata'), 'homogénea');
+    document.getElementById('p_hete').innerHTML = checkX(getP('Prostata'), 'heterogénea');
+    document.getElementById('p_creg').innerHTML = checkX(getP('Prostata'), 'contornos regulares');
+    document.getElementById('p_cirr').innerHTML = checkX(getP('Prostata'), 'irregulares');
+    document.getElementById('p_vol').innerText = getP('Volumen Prostata') || getP('volumen') || '____';
+    document.getElementById('p_ipp').innerText = getP('IPP') || '____';
+
+    // IMPRESIÓN DIAGNÓSTICA
+    document.getElementById('p_idx').innerText = getP('IDX Impresion Diagnostica') || getP('Impresion Diagnostica') || '-';
+
+    // FIRMA Y CONTACTO
+    if (getP('Medico tratante')) document.getElementById('p_firma_medico').innerText = getP('Medico tratante');
+    if (getP('Especialidad Medica')) document.getElementById('p_firma_esp').innerText = getP('Especialidad Medica');
+
+    let contactoStr = '';
+    if (getP('Direccion')) contactoStr += getP('Direccion') + '<br>';
+    if (getP('Numero de telefono principal')) contactoStr += 'Telf: ' + getP('Numero de telefono principal');
+    document.getElementById('p_contacto').innerHTML = contactoStr;
+  </script>
+</body>
+</html>
