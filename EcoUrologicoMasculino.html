@@ -257,8 +257,8 @@
             <span class="data-value" id="p_telefono">-</span>
           </div>
           <div class="data-item">
-            <span class="data-label">Sexo</span>
-            <span class="data-value" id="p_sexo">-</span>
+            <span class="data-label">F. Nacimiento</span>
+            <span class="data-value" id="p_f_nacimiento">-</span>
           </div>
         </div>
       </div>
@@ -412,7 +412,7 @@
     let subHeader = getP('Subtitulo');
     let dirHeader = getP('Direccion') || getP('Dirección');
     let telf1 = getP('Numero de telefono principal') || getP('Telefono') || getP('Teléfono');
-    let telf2 = getP('Numero de telefono secundario') || getP('Whatsapp') || getP('Celular');
+    let telf2 = getP('Numero secundario') || getP('Numero de telefono secundario') || getP('Whatsapp') || getP('Celular');
     let correo = getP('Correo') || getP('Email');
     let redes = getP('Redes') || getP('Instagram') || getP('Facebook');
 
@@ -442,16 +442,16 @@
     document.getElementById('p_cedula').innerText = getP('Cedula') || getP('Cédula') || '-';
     
     let edadVal = getP('Edad');
-    let sexoVal = getP('F / N') || getP('F/N') || getP('Sexo') || getP('F_N');
+    let sexoVal = getP('Sexo');
+    let fnVal = getP('F / N') || getP('F/N') || getP('F_N') || getP('Fecha de Nacimiento');
     
-    if (sexoVal && sexoVal.includes('/')) {
-      sexoVal = getP('Sexo') || getP('F / N') || '-';
-    }
-
+    // Asignación estricta de Edad / Sexo
     document.getElementById('p_edad_sexo').innerText = (edadVal ? edadVal + ' años' : '') + (sexoVal ? ' / ' + sexoVal : '');
     document.getElementById('p_fecha').innerText = formatDate(getP('Fecha'));
     document.getElementById('p_telefono').innerText = getP('Telefono') || getP('Teléfono') || '-';
-    document.getElementById('p_sexo').innerText = sexoVal || '-';
+    
+    // Asignación correcta de Fecha de Nacimiento en la casilla inferior derecha
+    document.getElementById('p_f_nacimiento').innerText = formatDate(fnVal);
 
     // EQUIPO
     let equipoRaw = getP('Equipo Utilizado') || getP('Equipo');
