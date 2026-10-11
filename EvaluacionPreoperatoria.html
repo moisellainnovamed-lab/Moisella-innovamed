@@ -68,7 +68,7 @@
       overflow: hidden;
     }
 
-    /* ENCABEZADO CON LOGO DINÁMICO */
+    /* ENCABEZADO CON LOGO FIJO */
     .header-container {
       border-bottom: 2pt solid #1a365d;
       padding-bottom: 6px;
@@ -235,7 +235,7 @@
 
   <div class="page-sheet">
     <div>
-      <!-- ENCABEZADO CENTRO MÉDICO DINÁMICO Y LOGO -->
+      <!-- ENCABEZADO CON LOGO FIJO DE GOOGLE DRIVE -->
       <div class="header-container">
         <div class="header-text">
           <div class="clinic-title" id="p_titulo">CENTRO MÉDICO</div>
@@ -271,7 +271,7 @@
         <div class="doc-title" id="p_tipo_informe">Evaluación Preoperatoria</div>
       </div>
 
-      <!-- CUERPO PRINCIPAL DEL INFORME CON ESPACIADO TIPO VIÑETA -->
+      <!-- CUERPO PRINCIPAL DEL INFORME -->
       <div class="report-content">
         <div class="intro-paragraph" id="p_resumen_box">
           <span id="p_resumen"></span>
@@ -367,12 +367,7 @@
       }
     }
 
-    // LOGO Y DATOS DE CABECERA
-    let logoUrl = getP(['Logo', 'LogoUrl', 'Imagen', 'Logopng']);
-    if (logoUrl) {
-      document.getElementById('p_logo').src = logoUrl;
-    }
-
+    // DATOS DE CABECERA
     let tituloVal = getP(['Titulo', 'Título']);
     if (tituloVal) document.getElementById('p_titulo').innerText = tituloVal;
 
