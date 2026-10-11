@@ -328,7 +328,13 @@
         for (let [paramKey, val] of params.entries()) {
           let cleanKey = decodeURIComponent(paramKey).replace(/\+/g, ' ').trim().toLowerCase().replace(/[\s_]+/g, '');
           if (cleanKey === target) {
-            return decodeURIComponent(val.replace(/\+/g, ' ')).trim();
+            // Decodificación robusta para asegurar texto plano exacto con signos %, (), /, etc.
+            let rawVal = val.replace(/\+/g, ' ');
+            try {
+              return decodeURIComponent(rawVal).trim();
+            } catch (e) {
+              return rawVal.trim();
+            }
           }
         }
       }
