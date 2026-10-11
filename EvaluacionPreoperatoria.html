@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Informe de Evaluación Preoperatoria Urológica</title>
+  <title>Informe de Evaluación Preoperatoria</title>
   <style>
     @page {
       size: letter portrait;
@@ -22,8 +22,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 9.5pt;
-      line-height: 1.3;
+      font-size: 10pt;
+      line-height: 1.4;
     }
 
     /* BOTÓN DE IMPRESIÓN / DESCARGA PDF */
@@ -54,12 +54,12 @@
       background-color: #2b6cb0;
     }
 
-    /* CONTENEDOR TAMAÑO CARTA FIJO Y CONTROLADO */
+    /* CONTENEDOR TAMAÑO CARTA FIJO */
     .page-sheet {
       width: 215.9mm;
       height: 279.4mm;
       background-color: #ffffff;
-      padding: 10mm 15mm;
+      padding: 12mm 18mm;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
       display: flex;
       flex-direction: column;
@@ -72,7 +72,7 @@
     .header-container {
       border-bottom: 2pt solid #1a365d;
       padding-bottom: 6px;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -105,19 +105,19 @@
       line-height: 1.3;
     }
 
-    /* FICHA PACIENTE */
+    /* FICHA PACIENTE (Limpia sin ID Paciente) */
     .patient-card {
       background-color: #f7fafc;
       border: 1px solid #e2e8f0;
       border-radius: 5px;
-      padding: 8px 12px;
-      margin-bottom: 8px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
     }
 
     .patient-grid {
       display: grid;
-      grid-template-columns: 2fr 1.2fr 1fr;
-      gap: 6px 12px;
+      grid-template-columns: 2.2fr 1.3fr 1fr;
+      gap: 8px 14px;
     }
 
     .data-item {
@@ -126,72 +126,58 @@
     }
 
     .data-label {
-      font-size: 7pt;
+      font-size: 7.5pt;
       font-weight: 700;
       text-transform: uppercase;
       color: #718096;
     }
 
     .data-value {
-      font-size: 9pt;
+      font-size: 9.5pt;
       font-weight: 600;
       color: #1a202c;
-      min-height: 12px;
+      min-height: 14px;
     }
 
-    /* TÍTULO DEL INFORME DEBAJO DE PACIENTE */
+    /* TÍTULO DEL INFORME */
     .doc-title-container {
       text-align: center;
-      margin: 4px 0 8px 0;
+      margin: 8px 0 16px 0;
     }
 
     .doc-title {
-      font-size: 11.5pt;
-      font-weight: 700;
+      font-size: 13pt;
+      font-weight: 800;
       color: #1a365d;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      border-bottom: 1px solid #cbd5e0;
-      display: inline-block;
-      padding-bottom: 2px;
+      letter-spacing: 0.8px;
     }
 
-    /* SECCIONES Y BLOQUES DE CONTENIDO */
-    .section-block {
-      margin-bottom: 6px;
-      background-color: #ffffff;
-      border: 1px solid #edf2f7;
-      border-left: 3px solid #1a365d;
-      border-radius: 3px;
-      padding: 6px 8px;
-    }
-
-    .section-title {
-      font-size: 8.5pt;
-      font-weight: 700;
-      color: #1a365d;
-      text-transform: uppercase;
-      margin-bottom: 2px;
-      letter-spacing: 0.3px;
-    }
-
-    .section-content {
-      font-size: 8.5pt;
+    /* CONTENIDO DEL INFORME ESTILO TEXTO CONTINUO */
+    .report-content {
+      font-size: 9.5pt;
       color: #2d3748;
-      line-height: 1.25;
-      white-space: pre-line;
+      line-height: 1.5;
+      text-align: justify;
     }
 
-    /* FILA DOBLE PARA ECOGRAFÍAS Y PLAN/DIAGNÓSTICO */
-    .two-col-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+    .intro-paragraph {
+      margin-bottom: 12px;
+      text-indent: 10px;
+    }
+
+    .clinical-item {
+      margin-bottom: 10px;
+    }
+
+    .clinical-label {
+      font-weight: 700;
+      color: #1a365d;
     }
 
     /* FIRMA Y PIE DE PÁGINA */
     .footer-container {
-      margin-top: 5px;
+      margin-top: 10px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -204,17 +190,17 @@
 
     .signature-line {
       border-top: 1px solid #718096;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
 
     .doctor-name {
       font-weight: 700;
-      font-size: 9pt;
+      font-size: 9.5pt;
       color: #1a365d;
     }
 
     .doctor-spec {
-      font-size: 7.5pt;
+      font-size: 8pt;
       color: #718096;
     }
 
@@ -230,7 +216,7 @@
         box-shadow: none;
         width: 100%;
         height: 100vh;
-        padding: 8mm 12mm;
+        padding: 10mm 15mm;
       }
     }
   </style>
@@ -255,7 +241,7 @@
         <img id="p_logo" class="clinic-logo" src="https://lh3.googleusercontent.com/d/1h_-qvm4EX96JvPaT0Wjx-zAhxkkbvxkQ" alt="Logo Centro Médico" />
       </div>
 
-      <!-- DATOS PACIENTE -->
+      <!-- DATOS PACIENTE (Sin ID de paciente) -->
       <div class="patient-card">
         <div class="patient-grid">
           <div class="data-item">
@@ -271,14 +257,6 @@
             <span class="data-value" id="p_edad">-</span>
           </div>
           <div class="data-item">
-            <span class="data-label">ID Paciente</span>
-            <span class="data-value" id="p_id_paciente">-</span>
-          </div>
-          <div class="data-item">
-            <span class="data-label">N° Informe / Eval</span>
-            <span class="data-value" id="p_id_informe">-</span>
-          </div>
-          <div class="data-item">
             <span class="data-label">Fecha de Informe</span>
             <span class="data-value" id="p_fecha">-</span>
           </div>
@@ -287,55 +265,43 @@
 
       <!-- TÍTULO DEL INFORME -->
       <div class="doc-title-container">
-        <div class="doc-title" id="p_tipo_informe">Evaluación Preoperatoria Urológica</div>
+        <div class="doc-title" id="p_tipo_informe">Evaluación Preoperatoria</div>
       </div>
 
-      <!-- RESUMEN CLÍNICO -->
-      <div class="section-block">
-        <div class="section-title">Resumen Clínico / Anamnesis</div>
-        <div class="section-content" id="p_resumen">-</div>
-      </div>
+      <!-- CUERPO PRINCIPAL DEL INFORME -->
+      <div class="report-content">
+        <!-- Introducción directa (Contenido del Resumen) -->
+        <div class="intro-paragraph" id="p_resumen_box">
+          <span id="p_resumen"></span>
+        </div>
 
-      <!-- EXAMEN FÍSICO Y LABORATORIO (DOS COLUMNAS) -->
-      <div class="two-col-grid">
-        <div class="section-block">
-          <div class="section-title">Examen Físico</div>
-          <div class="section-content" id="p_examen_fisico">-</div>
+        <div class="clinical-item" id="box_ef" style="display:none;">
+          <span class="clinical-label">Examen físico:</span> <span id="p_examen_fisico"></span>
         </div>
-        <div class="section-block">
-          <div class="section-title">Exámenes de Laboratorio</div>
-          <div class="section-content" id="p_laboratorio">-</div>
-        </div>
-      </div>
 
-      <!-- ECOGRAFÍA Y ECO PROSTÁTICO (DOS COLUMNAS) -->
-      <div class="two-col-grid">
-        <div class="section-block">
-          <div class="section-title">Ecografía Renal / Vesical</div>
-          <div class="section-content" id="p_ecografia">-</div>
+        <div class="clinical-item" id="box_lab" style="display:none;">
+          <span class="clinical-label">Lab:</span> <span id="p_laboratorio"></span>
         </div>
-        <div class="section-block">
-          <div class="section-title">Eco Prostático / Doppler</div>
-          <div class="section-content" id="p_eco_prostatico">-</div>
-        </div>
-      </div>
 
-      <!-- DIAGNÓSTICO Y PLAN QUIRÚRGICO (DOS COLUMNAS) -->
-      <div class="two-col-grid">
-        <div class="section-block" style="border-left-color: #2b6cb0;">
-          <div class="section-title">Diagnóstico Preoperatorio</div>
-          <div class="section-content" id="p_diagnostico">-</div>
+        <div class="clinical-item" id="box_eco" style="display:none;">
+          <span class="clinical-label">Ecografía:</span> <span id="p_ecografia"></span>
         </div>
-        <div class="section-block" style="border-left-color: #2b6cb0;">
-          <div class="section-title">Plan Quirúrgico</div>
-          <div class="section-content" id="p_plan">-</div>
-        </div>
-      </div>
 
-      <!-- OBSERVACIONES -->
-      <div class="section-block" style="border-left-color: #718096;">
-        <div class="section-title">Observaciones / Indicaciones</div>
-        <div class="section-content" id="p_observaciones">-</div>
+        <div class="clinical-item" id="box_eco_p" style="display:none;">
+          <span class="clinical-label">Eco Prostático:</span> <span id="p_eco_prostatico"></span>
+        </div>
+
+        <div class="clinical-item" id="box_diag" style="display:none; margin-top: 14px;">
+          <span class="clinical-label">Diagnóstico:</span> <span id="p_diagnostico"></span>
+        </div>
+
+        <div class="clinical-item" id="box_plan" style="display:none;">
+          <span class="clinical-label">Plan:</span> <span id="p_plan"></span>
+        </div>
+
+        <div class="clinical-item" id="box_obs" style="display:none;">
+          <span class="clinical-label">Observaciones:</span> <span id="p_observaciones"></span>
+        </div>
       </div>
     </div>
 
@@ -392,11 +358,16 @@
       return clean;
     }
 
-    // LOGO Y DATOS DE CABECERA DEL CENTRO MÉDICO
-    let logoUrl = getP(['Logo', 'LogoUrl', 'Imagen', 'Logopng']);
-    if (logoUrl) {
-      document.getElementById('p_logo').src = logoUrl;
+    function setContent(boxId, spanId, val) {
+      if (val) {
+        document.getElementById(spanId).innerText = val;
+        document.getElementById(boxId).style.display = 'block';
+      }
     }
+
+    // LOGO Y DATOS DE CABECERA
+    let logoUrl = getP(['Logo', 'LogoUrl', 'Imagen', 'Logopng']);
+    if (logoUrl) document.getElementById('p_logo').src = logoUrl;
 
     let tituloVal = getP(['Titulo', 'Título']);
     if (tituloVal) document.getElementById('p_titulo').innerText = tituloVal;
@@ -405,8 +376,8 @@
     let dirHeader = getP(['Direccion', 'Dirección']);
     let telf1 = getP(['Numero de telefono principal', 'Telefono principal', 'Telefono', 'Teléfono']);
     let telf2 = getP(['Numero secundario', 'Numero de telefono secundario', 'Telefono secundario', 'Whatsapp', 'Celular']);
-    let correo = getP(['Correo', 'Email']);
-    let redes = getP(['Redes', 'Instagram', 'Facebook']);
+    let correo = getP(['Correo', 'Email', 'Correo electronico']);
+    let redes = getP(['Redes', 'Redes sociales', 'Instagram', 'Facebook']);
 
     let subLines = [];
     if (subHeader) subLines.push(subHeader);
@@ -418,35 +389,34 @@
     if (correo) contactParts.push('Email: ' + correo);
     if (redes) contactParts.push('Redes: ' + redes);
 
-    if (contactParts.length > 0) {
-      subLines.push(contactParts.join(' | '));
-    }
+    if (contactParts.length > 0) subLines.push(contactParts.join(' | '));
+    if (subLines.length > 0) document.getElementById('p_subtitulo').innerHTML = subLines.join('<br>');
 
-    if (subLines.length > 0) {
-      document.getElementById('p_subtitulo').innerHTML = subLines.join('<br>');
-    }
-
-    // DATOS DE PACIENTE E INFORME
-    document.getElementById('p_id_informe').innerText = getP(['ID Informe', 'IDInforme', 'ID_Informe']) || '-';
+    // DATOS DE PACIENTE
     document.getElementById('p_fecha').innerText = formatDate(getP(['Fecha Informe', 'FechaInforme', 'Fecha']));
-    document.getElementById('p_id_paciente').innerText = getP(['IDPaciente', 'ID Paciente', 'ID_Paciente']) || '-';
     document.getElementById('p_nombre').innerText = getP(['Nombre Paciente', 'Nombre', 'Nombre y Apellido']) || '-';
     document.getElementById('p_cedula').innerText = getP(['Cedula Paciente', 'Cedula', 'Cédula']) || '-';
     
     let edadVal = getP(['Edad Paciente', 'Edad']);
     document.getElementById('p_edad').innerText = edadVal ? (edadVal.toLowerCase().includes('año') ? edadVal : edadVal + ' años') : '-';
 
-    // CAMPOS DE LA EVALUACIÓN PREOPERATORIA
-    document.getElementById('p_resumen').innerText = getP('Resumen') || '-';
-    document.getElementById('p_examen_fisico').innerText = getP(['Examen Fisico', 'Examen Físico']) || '-';
-    document.getElementById('p_laboratorio').innerText = getP('Laboratorio') || '-';
-    document.getElementById('p_ecografia').innerText = getP(['Ecografía', 'Ecografia']) || '-';
-    document.getElementById('p_eco_prostatico').innerText = getP(['Eco Prostático', 'Eco Prostatico']) || '-';
-    document.getElementById('p_diagnostico').innerText = getP(['Diagnostico', 'Diagnóstico']) || '-';
-    document.getElementById('p_plan').innerText = getP('Plan') || '-';
-    document.getElementById('p_observaciones').innerText = getP('Observaciones') || '-';
+    // PARÁGRAFO INTRODUCTORIO Y CAMPOS CLÍNICOS
+    let resumenVal = getP('Resumen');
+    if (resumenVal) {
+      document.getElementById('p_resumen').innerText = resumenVal;
+    } else {
+      document.getElementById('p_resumen_box').style.display = 'none';
+    }
 
-    // DATOS DEL MÉDICO Y FIRMA
+    setContent('box_ef', 'p_examen_fisico', getP(['Examen Fisico', 'Examen Físico']));
+    setContent('box_lab', 'p_laboratorio', getP('Laboratorio'));
+    setContent('box_eco', 'p_ecografia', getP(['Ecografía', 'Ecografia']));
+    setContent('box_eco_p', 'p_eco_prostatico', getP(['Eco Prostático', 'Eco Prostatico']));
+    setContent('box_diag', 'p_diagnostico', getP(['Diagnostico', 'Diagnóstico']));
+    setContent('box_plan', 'p_plan', getP('Plan'));
+    setContent('box_obs', 'p_observaciones', getP('Observaciones'));
+
+    // FIRMA DEL MÉDICO
     let medicoTratante = getP(['Medico Tratante', 'Medico', 'Médico Tratante', 'Médico']);
     if (medicoTratante) document.getElementById('p_firma_medico').innerText = medicoTratante;
 
