@@ -153,7 +153,7 @@
       letter-spacing: 0.8px;
     }
 
-    /* CONTENIDO DEL INFORME CON SANGRÍA TIPO VIÑETA (2.5em / 5 ESPACIOS) */
+    /* CONTENIDO DEL INFORME CON SANGRÍA TIPO VIÑETA */
     .report-content {
       font-size: 9.5pt;
       color: #2d3748;
@@ -164,11 +164,13 @@
     .intro-paragraph {
       margin-bottom: 12px;
       text-indent: 2.5em;
+      white-space: pre-line;
     }
 
     .clinical-item {
       margin-bottom: 10px;
       margin-left: 2.5em;
+      white-space: pre-line;
     }
 
     .clinical-label {
@@ -271,7 +273,6 @@
 
       <!-- CUERPO PRINCIPAL DEL INFORME CON ESPACIADO TIPO VIÑETA -->
       <div class="report-content">
-        <!-- Introducción con sangría -->
         <div class="intro-paragraph" id="p_resumen_box">
           <span id="p_resumen"></span>
         </div>
@@ -368,7 +369,9 @@
 
     // LOGO Y DATOS DE CABECERA
     let logoUrl = getP(['Logo', 'LogoUrl', 'Imagen', 'Logopng']);
-    if (logoUrl) document.getElementById('p_logo').src = logoUrl;
+    if (logoUrl) {
+      document.getElementById('p_logo').src = logoUrl;
+    }
 
     let tituloVal = getP(['Titulo', 'Título']);
     if (tituloVal) document.getElementById('p_titulo').innerText = tituloVal;
