@@ -1,470 +1,526 @@
-    *, *::before, *::after {
-        box-sizing: border-box;
-    }
-
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f1f5f9;
-        color: #1e293b;
-        width: 100vw;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    /* BANNER SUPERIOR DE ACCIONES */
-    .no-print-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 55px;
-        background: #1a365d;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 25px;
-        z-index: 9999;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-
-    .action-buttons {
-        display: flex;
-        gap: 12px;
-    }
-
-    .btn-print {
-        background-color: #2b6cb0;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        font-size: 13px;
-        font-weight: 700;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-
-    .btn-print:hover {
-        background-color: #1c4ed8;
-    }
-
-    .btn-word {
-        background-color: #10b981;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        font-size: 13px;
-        font-weight: 700;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-
-    .btn-word:hover {
-        background-color: #059669;
-    }
-
-    /* HOJA A4 HORIZONTAL */
-    .page-sheet {
-        width: 297mm;
-        height: 210mm;
-        background: #ffffff;
-        position: relative;
-        margin-top: 65px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        overflow: hidden;
-    }
-
-    /* CONTENEDOR PRINCIPAL DE 2 COLUMNAS */
-    .recipe-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 297mm;
-        height: 210mm;
-        z-index: 2;
-        display: table;
-        table-layout: fixed;
-    }
-
-    .recipe-column {
-        display: table-cell;
-        width: 50%;
-        height: 210mm;
-        vertical-align: top;
-        padding: 8mm 12mm 8mm 12mm;
-        position: relative;
-    }
-
-    .recipe-column.left {
-        border-right: 1px dashed #cbd5e1;
-    }
-
-    /* MARCA DE AGUA CENTRADA EN CADA COLUMNA */
-    .watermark-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 75%;
-        opacity: 0.08;
-        pointer-events: none;
-        z-index: 1;
-        text-align: center;
-    }
-
-    .watermark-img {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-    }
-
-    /* ENCABEZADO Y LOGO ALINEADO A LA IZQUIERDA */
-    .header-logo-container {
-        text-align: left;
-        margin-bottom: 2mm;
-    }
-
-    .header-logo {
-        max-height: 85px;
-        max-width: 220px;
-        object-fit: contain;
-    }
-
-    /* DATOS DEL PACIENTE */
-    .patient-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 8.5pt;
-        margin-bottom: 3mm;
-    }
-
-    .patient-table td {
-        padding: 2px 2px;
-        vertical-align: bottom;
-    }
-
-    .label {
-        font-weight: 700;
-        color: #1a365d;
-        white-space: nowrap;
-    }
-
-    .value {
-        color: #0f172a;
-        border-bottom: 1px solid #1a365d;
-        font-weight: 600;
-        padding-left: 4px;
-    }
-
-    /* TÍTULOS DE SECCIÓN */
-    .section-title {
-        font-size: 10pt;
-        font-weight: 800;
-        color: #1a365d;
-        margin-bottom: 3mm;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    /* LISTA DE CHECKBOXES */
-    .checkbox-list {
-        display: flex;
-        flex-direction: column;
-        gap: 4.5px;
-        position: relative;
-        z-index: 3;
-        min-height: 110mm;
-    }
-
-    .checkbox-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 9pt;
-        font-weight: 700;
-        color: #1e293b;
-    }
-
-    .checkbox-box {
-        width: 14px;
-        height: 14px;
-        border: 1.5px solid #1a365d;
-        background: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 11pt;
-        font-weight: 900;
-        color: #1a365d;
-        line-height: 1;
-        flex-shrink: 0;
-    }
-
-    .checkbox-item.sub-text {
-        padding-left: 22px;
-        font-size: 7.5pt;
-        font-weight: 600;
-        color: #475569;
-        margin-top: -3px;
-    }
-
-    /* PIE DE PÁGINA (QR Y TELÉFONO) */
-    .footer-container {
-        position: absolute;
-        bottom: 5mm;
-        left: 12mm;
-        right: 12mm;
-        z-index: 3;
-    }
-
-    .footer-flex-row {
-        display: flex;
-        align-items: flex-end;
-        justify-content: flex-end;
-    }
-
-    .qr-wrapper-right {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-    }
-
-    .qr-img-box {
-        width: 85px;
-        height: auto;
-        max-height: 85px;
-        object-fit: contain;
-        display: block;
-    }
-
-    .qr-phone-number {
-        font-size: 8pt;
-        font-weight: 700;
-        color: #0f766e;
-        margin-top: 2px;
-    }
-
-    /* REGLAS DE IMPRESIÓN */
-    @media print {
-        .no-print-bar { display: none !important; }
-        body { background: white; }
-        .page-sheet {
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorios e Indicaciones - Dra. Moisella Kanahan</title>
+    <!-- LIBRERÍA PARA EXPORTAR A WORD -->
+    <script src="https://unpkg.com/html2docx-js/dist/html2docx.bundle.js"></script>
+    <style>
+        @page {
+            size: A4 landscape;
             margin: 0;
-            box-shadow: none;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* BANNER SUPERIOR DE ACCIONES */
+        .no-print-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 55px;
+            background: #1a365d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            z-index: 9999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-print {
+            background-color: #2b6cb0;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-print:hover {
+            background-color: #1c4ed8;
+        }
+
+        .btn-word {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-word:hover {
+            background-color: #059669;
+        }
+
+        /* HOJA A4 HORIZONTAL */
+        .page-sheet {
             width: 297mm;
             height: 210mm;
+            background: #ffffff;
+            position: relative;
+            margin-top: 65px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            overflow: hidden;
         }
-    }
-</style>
 
+        /* CONTENEDOR PRINCIPAL DE 2 COLUMNAS */
+        .recipe-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 297mm;
+            height: 210mm;
+            z-index: 2;
+            display: table;
+            table-layout: fixed;
+        }
 
-<!-- BARRA SUPERIOR DE ACCIONES -->
-<div class="no-print-bar">
-    <span style="font-size: 14px; font-weight: 600;">Laboratorios e Imagenología - Dra. Moisella Kanahan</span>
-    <div class="action-buttons">
-        <button class="btn-word" onclick="downloadWord()">📄 Descargar a Word</button>
-        <button class="btn-print" onclick="window.print()">🖨 Imprimir / PDF</button>
-    </div>
-</div>
+        .recipe-column {
+            display: table-cell;
+            width: 50%;
+            height: 210mm;
+            vertical-align: top;
+            padding: 8mm 12mm 8mm 12mm;
+            position: relative;
+        }
 
-<!-- CONTENEDOR DOCUMENTO -->
-<div class="page-sheet" id="document-content">
-    <div class="recipe-wrapper">
-        
-        <!-- COLUMNA IZQUIERDA: LABORATORIOS -->
-        <div class="recipe-column left">
-            <!-- MARCA DE AGUA -->
-            <div class="watermark-container">
-                <img src="https://lh3.googleusercontent.com/d/1h_-qvm4EX96JvPaT0Wjx-zAhxkkbvxkQ" class="watermark-img" alt="Marca de Agua">
-            </div>
+        .recipe-column.left {
+            border-right: 1px dashed #cbd5e1;
+        }
 
-            <!-- ENCABEZADO Y LOGO -->
-            <div class="header-logo-container">
-                <img src="https://lh3.googleusercontent.com/d/1h_-qvm4EX96JvPaT0Wjx-zAhxkkbvxkQ" class="header-logo" alt="Logo Dra. Moisella Kanahan">
-            </div>
+        /* MARCA DE AGUA CENTRADA EN CADA COLUMNA */
+        .watermark-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 75%;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 1;
+            text-align: center;
+        }
 
-            <!-- DATOS DEL PACIENTE -->
-            <table class="patient-table">
-                <tr>
-                    <td class="label" style="width: 14%;">PACIENTE:</td>
-                    <td class="value" id="param-nombre-1" style="width: 86%;">-</td>
-                </tr>
-            </table>
+        .watermark-img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
 
-            <div class="section-title" style="margin-top: 4mm;">LABORATORIOS:</div>
+        /* ENCABEZADO Y LOGO ALINEADO A LA IZQUIERDA */
+        .header-logo-container {
+            text-align: left;
+            margin-bottom: 3mm;
+        }
 
-            <div class="checkbox-list">
-                <div class="checkbox-item"><div class="checkbox-box" id="chk-perfil20"></div> PERFIL 20</div>
-                <div class="checkbox-item"><div class="checkbox-box" id="chk-uroanalisis"></div> UROANÁLISIS</div>
-                <div class="checkbox-item"><div class="checkbox-box" id="chk-perfilhormonal"></div> PERFIL HORMONAL MASCULINO</div>
-                <div class="checkbox-item"><div class="checkbox-box" id="chk-cistatinac"></div> CISTATINA C,</div>
-                <div class="checkbox-item"><div class="checkbox-box" id="chk-urocultivo"></div> UROCULTIVO</div>
-                <div class="checkbox-item"><div class="checkbox-box" id="chk-psatotal"></div> PSA TOTAL Y LIBRE</div>
-                <div class="checkbox-item"><div class="checkbox-box" id="chk-urea"></div> UREA</div>
-                <div class="checkbox-item"><div class="checkbox-box" id="chk-fosforo"></div> FÓSFORO</div>
-                <div class="checkbox-item"><div class="checkbox-box" id="chk-creatinina"></div> CREATININA</div>
-            </div>
+        .header-logo {
+            max-height: 80px;
+            max-width: 220px;
+            object-fit: contain;
+        }
 
-            <!-- PIE DE PÁGINA -->
-            <div class="footer-container">
-                <div class="footer-flex-row">
-                    <div class="qr-wrapper-right">
-                        <img src="https://lh3.googleusercontent.com/d/1igeLPC_bosIL5i43jTTKQO3L5JEJSi6P" class="qr-img-box" alt="QR WhatsApp" />
-                        <span class="qr-phone-number">0412 - 309.96.22</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        /* DATOS DEL PACIENTE */
+        .patient-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8.5pt;
+            margin-bottom: 3mm;
+        }
 
-        <!-- COLUMNA DERECHA: IMAGENOLOGÍA Y DX -->
-        <div class="recipe-column right">
-            <!-- MARCA DE AGUA -->
-            <div class="watermark-container">
-                <img src="https://lh3.googleusercontent.com/d/1h_-qvm4EX96JvPaT0Wjx-zAhxkkbvxkQ" class="watermark-img" alt="Marca de Agua">
-            </div>
+        .patient-table td {
+            padding: 2px 2px;
+            vertical-align: bottom;
+        }
 
-            <!-- ENCABEZADO Y LOGO -->
-            <div class="header-logo-container">
-                <img src="https://lh3.googleusercontent.com/d/1h_-qvm4EX96JvPaT0Wjx-zAhxkkbvxkQ" class="header-logo" alt="Logo Dra. Moisella Kanahan">
-            </div>
+        .label {
+            font-weight: 700;
+            color: #1a365d;
+            white-space: nowrap;
+        }
 
-            <!-- DATOS DEL PACIENTE -->
-            <table class="patient-table">
-                <tr>
-                    <td class="label" style="width: 14%;">PACIENTE:</td>
-                    <td class="value" id="param-nombre-2" style="width: 46%;">-</td>
-                    <td class="label" style="width: 8%;">C.I.:</td>
-                    <td class="value" id="param-cedula-2" style="width: 15%;">-</td>
-                    <td class="label" style="width: 9%;">EDAD:</td>
-                    <td class="value" id="param-edad-2" style="width: 8%;">-</td>
-                </tr>
-            </table>
+        .value {
+            color: #0f172a;
+            border-bottom: 1px solid #1a365d;
+            font-weight: 600;
+            padding-left: 4px;
+        }
 
-            <div class="section-title" style="margin-top: 4mm;">FAVOR REALIZAR:</div>
+        /* TÍTULOS DE SECCIÓN */
+        .section-title {
+            font-size: 9.5pt;
+            font-weight: 800;
+            color: #1a365d;
+            margin-bottom: 2mm;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-            <div class="checkbox-list" style="min-height: 85mm;">
-                <div class="checkbox-item" style="margin-top: 6px;"><div class="checkbox-box" id="chk-us-renoprostatica"></div> ULTRASONIDO</div>
-                <div class="checkbox-item sub-text">RENO - VESICO - PROSTÁTICO</div>
+        /* LISTA DE CHECKS DE LABORATORIO */
+        .lab-list {
+            position: relative;
+            z-index: 3;
+            font-size: 8.5pt;
+            display: flex;
+            flex-direction: column;
+            gap: 3.5mm;
+        }
 
-                <div class="checkbox-item" style="margin-top: 10px;"><div class="checkbox-box" id="chk-us-renovesical"></div> ULTRASONIDO</div>
-                <div class="checkbox-item sub-text">RENO - VESICAL</div>
-                <div class="checkbox-item sub-text" style="font-size: 6.5pt; color: #64748b;">CON MEDICIÓN DE RESIDUO POSTMICCIONAL</div>
+        .lab-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-                <div class="checkbox-item" style="margin-top: 10px;"><div class="checkbox-box" id="chk-uroflumetria"></div> UROFLUMETRIA LIBRE</div>
-                <div class="checkbox-item sub-text" style="font-size: 6.5pt; color: #64748b;">CON MEDICIÓN DE RESIDUO POSTMICCIONAL</div>
-            </div>
+        .checkbox-box {
+            width: 15px;
+            height: 15px;
+            border: 1.5px solid #1a365d;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11pt;
+            font-weight: 900;
+            color: #1a365d;
+            line-height: 1;
+            flex-shrink: 0;
+        }
 
-            <!-- DIAGNÓSTICO -->
-            <div style="margin-top: 5mm; font-size: 9pt; position: relative; z-index: 3;">
-                <span style="font-weight: 800; color: #1a365d;">DX:</span> 
-                <span id="param-diagnostico" style="font-weight: 600; color: #0f172a; border-bottom: 1px solid #1a365d; display: inline-block; width: 88%; padding-left: 4px;">-</span>
-            </div>
+        .lab-label {
+            font-weight: 700;
+            color: #1e293b;
+        }
 
-            <!-- PIE DE PÁGINA -->
-            <div class="footer-container">
-                <div class="footer-flex-row">
-                    <div class="qr-wrapper-right">
-                        <img src="https://lh3.googleusercontent.com/d/1igeLPC_bosIL5i43jTTKQO3L5JEJSi6P" class="qr-img-box" alt="QR WhatsApp" />
-                        <span class="qr-phone-number">0412 - 309.96.22</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        /* DIAGNÓSTICO */
+        .dx-container {
+            margin-top: 4mm;
+            font-size: 9pt;
+            position: relative;
+            z-index: 3;
+        }
 
-    </div>
-</div>
+        .dx-label {
+            font-weight: 800;
+            color: #1a365d;
+            margin-bottom: 1mm;
+        }
 
-<script>
-    function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const val = urlParams.get(param);
-        return val ? decodeURIComponent(val.replace(/\+/g, ' ')) : '';
-    }
+        .dx-value {
+            border-bottom: 1px solid #1a365d;
+            min-height: 18px;
+            font-weight: 600;
+            color: #0f172a;
+            padding-left: 4px;
+        }
 
-    // Evalúa si el parámetro enviado desde AppSheet indica selección (equis, sí, true, y, etc.)
-    function isChecked(paramName) {
-        const val = getQueryParam(paramName);
-        if (!val) return false;
-        const clean = val.trim().toLowerCase();
-        return clean === 'true' || clean === 'y' || clean === 'si' || clean === 'sí' || clean === 'x' || clean === '1' || clean === 'selected';
-    }
+        /* PIE DE PÁGINA (QR GRANDE ABAJO A LA DERECHA) */
+        .footer-container {
+            position: absolute;
+            bottom: 4mm;
+            left: 12mm;
+            right: 12mm;
+            z-index: 3;
+        }
 
-    document.addEventListener("DOMContentLoaded", function() {
-        // Datos del Paciente
-        const nombre = getQueryParam('Nombre y Apellido') || getQueryParam('Nombre');
-        const cedula = getQueryParam('Cedula') || getQueryParam('Cédula');
-        const edad = getQueryParam('Edad');
-        const diagnostico = getQueryParam('Diagnostico DX') || getQueryParam('Diagnostico') || getQueryParam('DX');
+        .footer-flex-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+        }
 
-        const setText = (id, text) => {
-            const el = document.getElementById(id);
-            if (el) el.innerText = text && text.trim() !== '' ? text : '-';
-        };
+        .qr-wrapper-right {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
 
-        setText('param-nombre-1', nombre);
-        setText('param-nombre-2', nombre);
-        setText('param-cedula-2', cedula);
-        setText('param-edad-2', edad);
-        setText('param-diagnostico', diagnostico);
+        .qr-img-box {
+            width: 105px;
+            height: auto;
+            max-height: 105px;
+            object-fit: contain;
+            display: block;
+        }
 
-        // Mapeo de campos de laboratorios / estudios con sus nombres en la base de datos / AppSheet
-        const mapping = {
-            'chk-perfil20': isChecked('Perfil 20'),
-            'chk-uroanalisis': isChecked('Uroanalisis'),
-            'chk-perfilhormonal': isChecked('Perfil Hormonal Masculino'),
-            'chk-cistatinac': isChecked('Cistatina C'),
-            'chk-urocultivo': isChecked('Urocultivo'),
-            'chk-psatotal': isChecked('PSA Total y Libre'),
-            'chk-urea': isChecked('Urea'),
-            'chk-fosforo': isChecked('Fosforo'),
-            'chk-creatinina': isChecked('Creatinina'),
-            'chk-us-renoprostatica': isChecked('Ultrasonido Reno Vesico Prostatico'),
-            'chk-us-renovesical': isChecked('Ultrasonido Reno Vesical con Medicion de Residuos Postmiccional'),
-            'chk-uroflumetria': isChecked('Uroflumetria Libre con Medicion de Residuos Postmiccional')
-        };
-
-        for (const [elementId, checked] of Object.entries(mapping)) {
-            const el = document.getElementById(elementId);
-            if (el) {
-                el.innerText = checked ? 'X' : '';
+        /* REGLAS DE IMPRESIÓN */
+        @media print {
+            .no-print-bar { display: none !important; }
+            body { background: white; }
+            .page-sheet {
+                margin: 0;
+                box-shadow: none;
+                width: 297mm;
+                height: 210mm;
             }
         }
-    });
+    </style>
+</head>
+<body>
 
-    // EXPORTAR A WORD
-    function downloadWord() {
-        const content = document.getElementById('document-content').innerHTML;
-        const patientName = document.getElementById('param-nombre-1').innerText || 'Paciente';
-        
-        const htmlDocument = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset="utf-8">
-                <title>Orden de Laboratorios</title>
-            </head>
-            <body>
-                ${content}
-            </body>
-            </html>
-        `;
+    <!-- BARRA SUPERIOR DE ACCIONES -->
+    <div class="no-print-bar">
+        <span style="font-size: 14px; font-weight: 600;">Laboratorios e Indicaciones - Dra. Moisella Kanahan</span>
+        <div class="action-buttons">
+            <button class="btn-word" onclick="downloadWord()">📄 Descargar a Word</button>
+            <button class="btn-print" onclick="window.print()">🖨 Imprimir / PDF</button>
+        </div>
+    </div>
 
-        const converted = html2docx(htmlDocument, {
-            orientation: 'landscape',
-            margins: { top: 720, right: 720, bottom: 720, left: 720 }
+    <!-- CONTENEDOR DOCUMENTO -->
+    <div class="page-sheet" id="document-content">
+        <div class="recipe-wrapper">
+            
+            <!-- COLUMNA IZQUIERDA: LABORATORIOS -->
+            <div class="recipe-column left">
+                <!-- MARCA DE AGUA -->
+                <div class="watermark-container">
+                    <img src="https://lh3.googleusercontent.com/d/1h_-qvm4EX96JvPaT0Wjx-zAhxkkbvxkQ" class="watermark-img" alt="Marca de Agua">
+                </div>
+
+                <!-- ENCABEZADO Y LOGO -->
+                <div class="header-logo-container">
+                    <img src="https://lh3.googleusercontent.com/d/1h_-qvm4EX96JvPaT0Wjx-zAhxkkbvxkQ" class="header-logo" alt="Logo Dra. Moisella Kanahan">
+                </div>
+
+                <!-- DATOS DEL PACIENTE -->
+                <table class="patient-table">
+                    <tr>
+                        <td class="label" style="width: 14%;">PACIENTE:</td>
+                        <td class="value" id="param-nombre-1" style="width: 86%;">-</td>
+                    </tr>
+                </table>
+
+                <div class="section-title" style="margin-top: 2mm;">LABORATORIOS:</div>
+
+                <!-- LISTA DE CHECKS IZQUIERDA -->
+                <div class="lab-list">
+                    <div class="lab-item">
+                        <div class="checkbox-box" id="chk-perfil20"></div>
+                        <span class="lab-label">PERFIL 20</span>
+                    </div>
+                    <div class="lab-item">
+                        <div class="checkbox-box" id="chk-uroanalisis"></div>
+                        <span class="lab-label">UROANÁLISIS</span>
+                    </div>
+                    <div class="lab-item">
+                        <div class="checkbox-box" id="chk-perfilhormonal"></div>
+                        <span class="lab-label">PERFIL HORMONAL MASCULINO</span>
+                    </div>
+                    <div class="lab-item">
+                        <div class="checkbox-box" id="chk-cistatinac"></div>
+                        <span class="lab-label">CISTATINA C,</span>
+                    </div>
+                    <div class="lab-item">
+                        <div class="checkbox-box" id="chk-urocultivo"></div>
+                        <span class="lab-label">UROCULTIVO</span>
+                    </div>
+                    <div class="lab-item">
+                        <div class="checkbox-box" id="chk-psatotal"></div>
+                        <span class="lab-label">PSA TOTAL Y LIBRE</span>
+                    </div>
+                    <div class="lab-item">
+                        <div class="checkbox-box" id="chk-urea"></div>
+                        <span class="lab-label">UREA</span>
+                    </div>
+                    <div class="lab-item">
+                        <div class="checkbox-box" id="chk-fosforo"></div>
+                        <span class="lab-label">FÓSFORO</span>
+                    </div>
+                    <div class="lab-item">
+                        <div class="checkbox-box" id="chk-creatinina"></div>
+                        <span class="lab-label">CREATININA</span>
+                    </div>
+                </div>
+
+                <!-- PIE DE PÁGINA -->
+                <div class="footer-container">
+                    <div class="footer-flex-row">
+                        <div class="qr-wrapper-right">
+                            <img src="https://lh3.googleusercontent.com/d/1igeLPC_bosIL5i43jTTKQO3L5JEJSi6P" class="qr-img-box" alt="QR WhatsApp" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA: ESTUDIOS / ULTRASONIDOS Y DX -->
+            <div class="recipe-column right">
+                <!-- MARCA DE AGUA -->
+                <div class="watermark-container">
+                    <img src="https://lh3.googleusercontent.com/d/1h_-qvm4EX96JvPaT0Wjx-zAhxkkbvxkQ" class="watermark-img" alt="Marca de Agua">
+                </div>
+
+                <!-- ENCABEZADO Y LOGO -->
+                <div class="header-logo-container">
+                    <img src="https://lh3.googleusercontent.com/d/1h_-qvm4EX96JvPaT0Wjx-zAhxkkbvxkQ" class="header-logo" alt="Logo Dra. Moisella Kanahan">
+                </div>
+
+                <!-- DATOS DEL PACIENTE -->
+                <table class="patient-table">
+                    <tr>
+                        <td class="label" style="width: 14%;">PACIENTE:</td>
+                        <td class="value" id="param-nombre-2" style="width: 86%;">-</td>
+                    </tr>
+                </table>
+                <table class="patient-table">
+                    <tr>
+                        <td class="label" style="width: 10%;">C.I.:</td>
+                        <td class="value" id="param-cedula-2" style="width: 48%;">-</td>
+                        <td class="label" style="width: 12%; padding-left: 10px;">EDAD:</td>
+                        <td class="value" id="param-edad-2" style="width: 30%;">-</td>
+                    </tr>
+                </table>
+
+                <div class="section-title" style="margin-top: 3mm;">FAVOR REALIZAR:</div>
+
+                <!-- LISTA DE CHECKS DERECHA -->
+                <div class="lab-list">
+                    <div class="lab-item" style="align-items: flex-start;">
+                        <div class="checkbox-box" id="chk-us-renoprostatico" style="margin-top: 2px;"></div>
+                        <span class="lab-label" style="line-height: 1.2;">ULTRASONIDO<br>RENO - VESICO - PROSTÁTICO</span>
+                    </div>
+                    <div class="lab-item" style="align-items: flex-start; margin-top: 2mm;">
+                        <div class="checkbox-box" id="chk-us-renovesical" style="margin-top: 2px;"></div>
+                        <span class="lab-label" style="line-height: 1.2; font-size: 8pt;">ULTRASONIDO<br>RENO - VESICAL<br><span style="font-size: 7pt; font-weight: 500; color: #475569;">CON MEDICIÓN DE RESIDUO POSTMICCIONAL</span></span>
+                    </div>
+                    <div class="lab-item" style="align-items: flex-start; margin-top: 2mm;">
+                        <div class="checkbox-box" id="chk-uroflumetria" style="margin-top: 2px;"></div>
+                        <span class="lab-label" style="line-height: 1.2; font-size: 8pt;">UROFLUMETRIA LIBRE<br><span style="font-size: 7pt; font-weight: 500; color: #475569;">CON MEDICIÓN DE RESIDUO POSTMICCIONAL</span></span>
+                    </div>
+                </div>
+
+                <!-- DIAGNÓSTICO -->
+                <div class="dx-container">
+                    <div class="dx-label">DX:</div>
+                    <div class="dx-value" id="param-dx">-</div>
+                </div>
+
+                <!-- PIE DE PÁGINA -->
+                <div class="footer-container">
+                    <div class="footer-flex-row">
+                        <div class="qr-wrapper-right">
+                            <img src="https://lh3.googleusercontent.com/d/1igeLPC_bosIL5i43jTTKQO3L5JEJSi6P" class="qr-img-box" alt="QR WhatsApp" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const val = urlParams.get(param);
+            return val ? decodeURIComponent(val.replace(/\+/g, ' ')) : '';
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Datos del paciente
+            const nombre = getQueryParam('Nombre y Apellido') || getQueryParam('Nombre');
+            const cedula = getQueryParam('Cedula') || getQueryParam('Cédula');
+            const edad = getQueryParam('Edad');
+            const diagnostico = getQueryParam('Diagnostico DX') || getQueryParam('Diagnostico') || getQueryParam('DX');
+
+            const setText = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = text && text.trim() !== '' ? text : '-';
+            };
+
+            setText('param-nombre-1', nombre);
+            setText('param-nombre-2', nombre);
+            setText('param-cedula-2', cedula);
+            setText('param-edad-2', edad);
+            setText('param-dx', diagnostico);
+
+            // Función para marcar con un "✓" si AppSheet envía valores afirmativos (Y, Sí, X, true, etc.)
+            const setCheck = (elementId, paramName) => {
+                const val = getQueryParam(paramName);
+                const el = document.getElementById(elementId);
+                if (el && val) {
+                    const cleanVal = val.trim().toLowerCase();
+                    if (['y', 'sí', 'si', 'x', 'true', '1', 'checked'].includes(cleanVal)) {
+                        el.innerText = '✓';
+                    }
+                }
+            };
+
+            // Mapeo de parámetros de AppSheet con los campos de laboratorio correspondientes
+            setCheck('chk-perfil20', 'Perfil 20');
+            setCheck('chk-uroanalisis', 'Uroanalisis');
+            setCheck('chk-perfilhormonal', 'Perfil Hormonal Masculino');
+            setCheck('chk-cistatinac', 'Cistatina C');
+            setCheck('chk-urocultivo', 'Urocultivo');
+            setCheck('chk-psatotal', 'PSA Total y Libre');
+            setCheck('chk-urea', 'Urea');
+            setCheck('chk-fosforo', 'Fosforo');
+            setCheck('chk-creatinina', 'Creatinina');
+
+            setCheck('chk-us-renoprostatico', 'Ultrasonido Reno Vesico Prostatico');
+            setCheck('chk-us-renovesical', 'Ultrasonido Reno Vesical con Medicion de Residuos Postmiccional');
+            setCheck('chk-uroflumetria', 'Uroflumetria Libre con Medicion de Residuos Postmiccional');
         });
 
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(converted);
-        link.download = `Laboratorios_${patientName.replace(/\s+/g, '_')}.docx`;
-        link.click();
-    }
-</script>
+        // EXPORTAR A WORD
+        function downloadWord() {
+            const content = document.getElementById('document-content').innerHTML;
+            const patientName = document.getElementById('param-nombre-1').innerText || 'Paciente';
+            
+            const htmlDocument = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="utf-8">
+                    <title>Laboratorios Medicos</title>
+                </head>
+                <body>
+                    ${content}
+                </body>
+                </html>
+            `;
+
+            const converted = html2docx(htmlDocument, {
+                orientation: 'landscape',
+                margins: { top: 720, right: 720, bottom: 720, left: 720 }
+            });
+
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(converted);
+            link.download = `Laboratorios_${patientName.replace(/\s+/g, '_')}.docx`;
+            link.click();
+        }
+    </script>
+</body>
+</html>
