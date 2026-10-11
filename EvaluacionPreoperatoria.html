@@ -235,7 +235,7 @@
 
   <div class="page-sheet">
     <div>
-      <!-- ENCABEZADO CON LOGO FIJO DE GOOGLE DRIVE -->
+      <!-- ENCABEZADO CON LOGO FIJO -->
       <div class="header-container">
         <div class="header-text">
           <div class="clinic-title" id="p_titulo">CENTRO MÉDICO</div>
@@ -328,7 +328,7 @@
         for (let [paramKey, val] of params.entries()) {
           let cleanKey = decodeURIComponent(paramKey).replace(/\+/g, ' ').trim().toLowerCase().replace(/[\s_]+/g, '');
           if (cleanKey === target) {
-            return decodeURIComponent(val).replace(/\+/g, ' ').trim();
+            return decodeURIComponent(val.replace(/\+/g, ' ')).trim();
           }
         }
       }
@@ -361,7 +361,7 @@
     }
 
     function setContent(boxId, spanId, val) {
-      if (val) {
+      if (val && val !== '-') {
         document.getElementById(spanId).innerText = val;
         document.getElementById(boxId).style.display = 'block';
       }
